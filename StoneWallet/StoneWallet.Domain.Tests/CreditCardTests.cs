@@ -9,8 +9,7 @@ namespace StoneWallet.Domain.Tests
         [Fact]
         public void Shoud_CreateCreditCard()
         {
-            var card = new CreditCard("Wellington", 123456789, 123, 1000, DateTime.Now.AddDays(30), DateTime.Now.AddYears(1));
-
+            var card = CreateCreditCard(1000);
             Assert.NotNull(card);
         }
 
@@ -18,30 +17,49 @@ namespace StoneWallet.Domain.Tests
         public void Should_DecreaseAvailableLimitFromCard_When_Buy()
         {
             // Arrange
-            var credtCardLimit = 1000;
-            var card = new CreditCard("Wellington", 123456789, 123, credtCardLimit, DateTime.Now.AddDays(30), DateTime.Now.AddYears(1));
+            var creditCardLimit = 1000;
+            var card = CreateCreditCard(creditCardLimit);
+            var originalCardAvailableCredit = card.AvailableCredit;
 
             // Act
             card.Buy(300);
 
             // Assert
+            Assert.NotEqual(originalCardAvailableCredit, card.AvailableCredit);
             Assert.Equal(700, card.AvailableCredit);
         }
+
+        [Fact]
+        public void Cannot_Buy_When_NotExistsAvailableCredit()
+        {
+            // Arrange
+            var creditCardLimit = 500;
+            var card = CreateCreditCard(creditCardLimit);
+
+            // Act and Assert
+            Assert.Throws<InvalidOperationException>(() => card.Buy(600));
+        }
+
 
         [Fact]
         public void Should_ReleaseAvailableLimitFromCard_When_PayInvoice()
         {
             // Arrange
-            var credtCardLimit = 1000;
+            var creditCardLimit = 1000;
             var amount = 300;
-            var card = new CreditCard("Wellington", 123456789, 123, credtCardLimit, DateTime.Now.AddDays(30), DateTime.Now.AddYears(1));
+            var card = CreateCreditCard(creditCardLimit);
             card.Buy(amount);
 
             // Act
             card.ReleaseCredit(amount);
 
             // Assert
-            Assert.Equal(credtCardLimit, card.AvailableCredit);
+            Assert.Equal(creditCardLimit, card.AvailableCredit);
+        }
+
+        private static CreditCard CreateCreditCard(int creditCardLimit)
+        {
+            return new CreditCard("Wellington", 123456789, 123, creditCardLimit, DateTime.Now.AddDays(30), DateTime.Now.AddYears(1));
         }
     }
 }

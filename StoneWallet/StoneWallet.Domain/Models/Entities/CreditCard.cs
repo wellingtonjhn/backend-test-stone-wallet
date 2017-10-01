@@ -45,7 +45,14 @@ namespace StoneWallet.Domain.Models.Entities
         /// Realiza uma compra no cartão
         /// </summary>
         /// <param name="amount">Valor da compra</param>
-        public void Buy(decimal amount) => AvailableCredit -= amount;
+        public void Buy(decimal amount)
+        {
+            if (amount > AvailableCredit)
+            {
+                throw new InvalidOperationException("Cartão não possui crédito disponível para realizar a compra");
+            }
+            AvailableCredit -= amount;
+        } 
 
         public override int GetHashCode() => Number.GetHashCode();
 
