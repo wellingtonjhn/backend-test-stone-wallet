@@ -2,6 +2,9 @@
 
 namespace StoneWallet.Domain.Models.Entities
 {
+    /// <summary>
+    /// Representa um Cartão de Crédito
+    /// </summary>
     public sealed class CreditCard : Entity
     {
         public long Number { get; }
@@ -12,6 +15,15 @@ namespace StoneWallet.Domain.Models.Entities
         public decimal CreditLimit { get; }
         public decimal AvailableCredit { get; private set; }
 
+        /// <summary>
+        /// Novo cartão de crédito
+        /// </summary>
+        /// <param name="name">Nome impresso do cliente</param>
+        /// <param name="number">Número do cartão</param>
+        /// <param name="cvv">Código de segurança</param>
+        /// <param name="creditLimit">Limite de crédito</param>
+        /// <param name="dueDate">Data de vencimento</param>
+        /// <param name="expirationDate">Data de validade</param>
         public CreditCard(string name, long number, int cvv, decimal creditLimit, DateTime dueDate, DateTime expirationDate)
         {
             Number = number;
@@ -23,6 +35,10 @@ namespace StoneWallet.Domain.Models.Entities
             AvailableCredit = creditLimit;
         }
 
+        /// <summary>
+        /// Liberar limite de crédito
+        /// </summary>
+        /// <param name="amount">Valor a ser liberado</param>
         public void ReleaseCredit(decimal amount)
         {
             AvailableCredit += amount;
@@ -38,6 +54,5 @@ namespace StoneWallet.Domain.Models.Entities
             var creditCard = obj as CreditCard;
             return Number == creditCard?.Number;
         }
-
     }
 }

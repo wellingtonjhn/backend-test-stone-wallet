@@ -1,29 +1,36 @@
-﻿namespace StoneWallet.Domain.Models.Entities
+﻿using System;
+
+namespace StoneWallet.Domain.Models.Entities
 {
+    /// <summary>
+    /// Representa um usuário do sistema
+    /// </summary>
     public sealed class User : Entity
     {
         public string Name { get; }
-        public string Username { get; }
         public string Password { get; private set; }
         public string Email { get; private set; }
 
-        public User(string username, string password, string name, string email)
+        public User(string name, string email, string password)
         {
-            Username = username;
             Password = password;
             Name = name;
             Email = email;
         }
 
-        public void ChangePassword(string password)
+        /// <summary>
+        /// Altera a senha do usuário
+        /// </summary>
+        /// <param name="newPassword">Nova senha</param>
+        /// <param name="newPasswordConfirmation">Confirmação da nova senha</param>
+        public void ChangePassword(string newPassword, string newPasswordConfirmation)
         {
-            Password = password;
-        }
+            if (!newPassword.Equals(newPasswordConfirmation))
+            {
+                throw new InvalidOperationException("As senhas não conferem");
+            }
 
-        public void ChangeEmail(string email)
-        {
-            Email = email;
+            Password = newPassword;
         }
-
     }
 }
