@@ -39,10 +39,13 @@ namespace StoneWallet.Domain.Models.Entities
         /// Liberar limite de crédito
         /// </summary>
         /// <param name="amount">Valor a ser liberado</param>
-        public void ReleaseCredit(decimal amount)
-        {
-            AvailableCredit += amount;
-        }
+        public void ReleaseCredit(decimal amount) => AvailableCredit += amount;
+
+        /// <summary>
+        /// Realiza uma compra no cartão
+        /// </summary>
+        /// <param name="amount">Valor da compra</param>
+        public void Buy(decimal amount) => AvailableCredit -= amount;
 
         public override int GetHashCode() => Number.GetHashCode();
 
