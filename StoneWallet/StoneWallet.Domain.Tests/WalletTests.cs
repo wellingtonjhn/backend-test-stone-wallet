@@ -1,5 +1,6 @@
 ﻿using StoneWallet.Domain.Models.Entities;
 using System;
+using System.Linq;
 using Xunit;
 
 namespace StoneWallet.Domain.Tests
@@ -33,6 +34,24 @@ namespace StoneWallet.Domain.Tests
 
             // Assert
             Assert.Contains(creditCard, wallet.CreditCards);
+        }
+
+        [Fact]
+        public void Should_AddMoreThanOneCreditCard()
+        {
+            // Arrange
+            var user = GetValidUser();
+            var creditCardOne = new CreditCard("Wellington", 123456789, 123, 1000, DateTime.Now.AddDays(30), DateTime.Now.AddYears(1));
+            var creditCardTwo = new CreditCard("Katia", 987654321, 124563, 500, DateTime.Now.AddDays(30), DateTime.Now.AddYears(1));
+
+            var wallet = new Wallet(user);
+
+            // Act
+            wallet.AddCreditCard(creditCardOne);
+            wallet.AddCreditCard(creditCardTwo);
+
+            // Assert
+            Assert.Equal(2, wallet.CreditCards.Count);
         }
 
         [Fact]
@@ -98,6 +117,37 @@ namespace StoneWallet.Domain.Tests
 
             // Assert
             Assert.Equal(newLimit, wallet.AvailableCredit);
+        }
+
+        [Fact]
+        public void Should_CannotMakeAPurchase_When_WalletNotContainsAnyCreditCard()
+        {
+            // Arrange
+            var user = GetValidUser();
+            var wallet = new Wallet(user);
+
+            // Act
+            Assert.Throws<InvalidOperationException>(() => wallet.Buy(500));
+        }
+
+        [Fact]
+        public void Should_MakeAPurchase_With_HigherDueDateCreditCard()
+        {
+            // Arrange
+            var user = GetValidUser();
+            var wallet = new Wallet(user);
+            var higherDueDateCreditCard = new CreditCard("Katia", 987654321, 789, 500, DateTime.Now.AddDays(60), DateTime.Now.AddYears(1));
+            var anotherCreditCard = new CreditCard("Wellington", 123456789, 123, 1000, DateTime.Now.AddDays(30), DateTime.Now.AddYears(1));
+
+            wallet.AddCreditCard(higherDueDateCreditCard);
+            wallet.AddCreditCard(anotherCreditCard);
+
+            // Act
+            wallet.Buy(300);
+
+            // Assert
+            var selectedCreditCard = wallet.CreditCards.First(a => a.Number == higherDueDateCreditCard.Number);
+            Assert.Equal(200, selectedCreditCard.AvailableCredit);
         }
 
         private static User GetValidUser()

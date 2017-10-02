@@ -16,4 +16,10 @@
     <ProjectReference Include="..\StoneWallet.Domain\StoneWallet.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="xunit.runner.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
