@@ -76,7 +76,7 @@ namespace StoneWallet.Domain.Tests
             var creditCard = GetValidCreditCard();
             var wallet = new Wallet(user);
             wallet.AddCreditCard(creditCard);
-            
+
             // Act
             wallet.RemoveCreditCard(creditCard.Number);
 
@@ -185,21 +185,80 @@ namespace StoneWallet.Domain.Tests
             // Arrange
             var user = GetValidUser();
             var wallet = new Wallet(user);
-            var minimumLimitCreditCard = new CreditCard("Wellington", 987654321, 789, 500, DateTime.Now.AddDays(30), DateTime.Now.AddYears(1));
-            var anotherCreditCard = new CreditCard("Katia", 123456789, 123, 1000, DateTime.Now.AddDays(30), DateTime.Now.AddYears(1));
+            var firstCreditCard = new CreditCard("Katia", 543216789, 432, 500, DateTime.Now.AddDays(30), DateTime.Now.AddYears(1));
+            var minimumLimitCreditCard = new CreditCard("Wellington", 987654321, 789, 350, DateTime.Now.AddDays(30), DateTime.Now.AddYears(1));
 
+            wallet.AddCreditCard(firstCreditCard);
             wallet.AddCreditCard(minimumLimitCreditCard);
-            wallet.AddCreditCard(anotherCreditCard);
 
             // Act
             wallet.Buy(175);
 
             // Assert
-            var selectedCreditCard = wallet.CreditCards.First(a => a.Number == minimumLimitCreditCard.Number);
-            Assert.Equal(325, selectedCreditCard.AvailableCredit);
-            Assert.Equal(1325, wallet.AvailableCredit);
+            Assert.Equal(175, wallet.CreditCards.First(a => a.Number == minimumLimitCreditCard.Number).AvailableCredit);
+            Assert.Equal(675, wallet.AvailableCredit);
         }
-        
+
+        [Fact]
+        public void Should_MakeAPurchase_With_MultipleCreditCardsAndDifferentDueDates()
+        {
+            // Arrange
+            var user = GetValidUser();
+            var wallet = new Wallet(user);
+            var firstCreditCard = new CreditCard("Wellington", 987654321, 789, 500, DateTime.Now.AddDays(60), DateTime.Now.AddYears(1));
+            var secondCreditCard = new CreditCard("Katia", 123456789, 123, 1000, DateTime.Now.AddDays(30), DateTime.Now.AddYears(1));
+            var thirdCreditCard = new CreditCard("Leonardo", 123459876, 143, 250, DateTime.Now.AddDays(45), DateTime.Now.AddYears(1));
+
+            wallet.AddCreditCard(firstCreditCard);
+            wallet.AddCreditCard(secondCreditCard);
+            wallet.AddCreditCard(thirdCreditCard);
+
+            // Act
+            wallet.Buy(1300);
+
+            // Assert
+            Assert.Equal(0, wallet.CreditCards.First(card => card.Number == firstCreditCard.Number).AvailableCredit);
+            Assert.Equal(0, wallet.CreditCards.First(card => card.Number == thirdCreditCard.Number).AvailableCredit);
+
+            Assert.Equal(450, wallet.CreditCards.First(card => card.Number == secondCreditCard.Number).AvailableCredit);
+            Assert.Equal(450, wallet.AvailableCredit);
+        }
+
+        [Fact]
+        public void Should_MakeAPurchase_With_MultipleCreditCardsAndSimilarDueDates()
+        {
+            // Arrange
+            var user = GetValidUser();
+            var wallet = new Wallet(user);
+            var firstCreditCard = new CreditCard("Wellington", 987654321, 789, 500, DateTime.Now.AddDays(60), DateTime.Now.AddYears(1));
+            var secondCreditCard = new CreditCard("Katia", 123456789, 123, 1000, DateTime.Now.AddDays(60), DateTime.Now.AddYears(1));
+
+            wallet.AddCreditCard(firstCreditCard);
+            wallet.AddCreditCard(secondCreditCard);
+
+            // Act
+            wallet.Buy(1450);
+
+            // Assert
+            Assert.Equal(0, wallet.CreditCards.First(card => card.Number == firstCreditCard.Number).AvailableCredit);
+            Assert.Equal(50, wallet.CreditCards.First(card => card.Number == secondCreditCard.Number).AvailableCredit);
+            Assert.Equal(50, wallet.AvailableCredit);
+        }
+
+        [Fact]
+        public void Cannot_MakeAPurchase_When_InsuficientAvailableCreditLimit()
+        {
+            // Arrange
+            var user = GetValidUser();
+            var wallet = new Wallet(user);
+            var creditCard = new CreditCard("Wellington", 987654321, 789, 500, DateTime.Now.AddDays(60), DateTime.Now.AddYears(1));
+
+            wallet.AddCreditCard(creditCard);
+
+            // Act and Assert
+            Assert.Throws<InvalidOperationException>(() => wallet.Buy(673));
+        }
+
         private static User GetValidUser()
         {
             return new User("Wellington Nascimento", "wellington.jhn@gmail.com", "super_password");

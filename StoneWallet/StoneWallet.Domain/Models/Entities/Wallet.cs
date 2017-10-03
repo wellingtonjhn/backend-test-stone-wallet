@@ -56,6 +56,7 @@ namespace StoneWallet.Domain.Models.Entities
             var card = CreditCards.First(a => a.Number == number);
             _creditCards.Remove(card);
         }
+
         /// <summary>
         /// Modifica o limite de crédito da wallet
         /// </summary>
@@ -81,64 +82,75 @@ namespace StoneWallet.Domain.Models.Entities
                 throw new InvalidOperationException("Não existem cartões de crédito disponíveis para realizar essa compra");
             }
 
-            var selectedCard = SelectBetterCard(amount);
+            if (AvailableCredit < amount)
+            {
+                throw new InvalidOperationException("Sem crédito disponível para realizar essa compra");
+            }
 
-            if (selectedCard != null && selectedCard.AvailableCredit >= amount)
+            var selectedCard = SelectBetterCard();
+
+            if (selectedCard.AvailableCredit >= amount)
             {
                 selectedCard.Buy(amount);
             }
-            else if (AvailableCredit >= amount)
+            else
             {
-                selectedCard = SelectBetterCard(amount);
-
-                var availableCredit = selectedCard?.AvailableCredit ?? 0;
-                var diffAmount = amount - availableCredit;
-
-                if (availableCredit == 0)
-                {
-                    // SPLITAR O VALOR DA COMPRA
-                }
-                else
-                {
-
-                    if (diffAmount <= 0)
-                    {
-                        selectedCard.Buy(amount);
-                    }
-                    else
-                    {
-                        selectedCard.Buy(availableCredit);
-
-                        Buy(diffAmount);
-                    }
-                }
+                SplitPurchaseIntoMultipleCards(amount, selectedCard);
             }
+        }
+
+        /// <summary>
+        /// Realiza a divisão da compra em multiplos cartões
+        /// </summary>
+        /// <param name="amount">Valor a ser debitado no cartão</param>
+        /// <param name="preSelectedCard">Cartão pré-selecionado</param>
+        private void SplitPurchaseIntoMultipleCards(decimal amount, CreditCard preSelectedCard)
+        {
+            var availableCredit = preSelectedCard.AvailableCredit;
+            var diffAmount = amount - availableCredit;
+
+            preSelectedCard.Buy(availableCredit);
+            Buy(diffAmount);
+
         }
 
         /// <summary>
         /// Seleciona o melhor cartão de crédito respeitando os seguintes critérios:
         /// <para>1 - Seleciona o cartão com a maior data de vencimento</para>
-        /// <para>2 - Seleciona o cartão com o menor limite de crédito</para>
+        /// <para>2 - Seleciona o cartão com o menor limite de crédito caso existam datas de vencimento duplicadas</para>
         /// </summary>
         /// <returns>Cartão de crédito</returns>
-        private CreditCard SelectBetterCard(decimal amount)
+        private CreditCard SelectBetterCard()
         {
-            var preferencialCard = CreditCards
-                .OrderByDescending(card => card.DueDate)
-                .FirstOrDefault();
+            var preferencialCard = GetPreferencialCard();
+            var duplicatedDueDates = ExistsDuplicatedDueDates();
 
-            return CreditCards.Count(a => a.DueDate.Equals(preferencialCard?.DueDate)) == 0
-                ? preferencialCard
-                : GetMinimumAvailableLimitCard(amount);
+            return duplicatedDueDates
+                ? GetMinimumAvailableLimitCard()
+                : preferencialCard;
         }
 
-        private CreditCard GetMinimumAvailableLimitCard(decimal amount)
+        private CreditCard GetPreferencialCard()
         {
             return CreditCards
-                .GroupBy(c => c.DueDate)
-                .Select(g => g.OrderBy(a => a.CreditLimit)
-                    .FirstOrDefault(a => a.AvailableCredit >= amount)
+                .OrderByDescending(card => card.DueDate.Date)
+                .FirstOrDefault(card => card.AvailableCredit > 0);
+        }
+
+        private CreditCard GetMinimumAvailableLimitCard()
+        {
+            return CreditCards
+                .GroupBy(card => card.DueDate.Date)
+                .Select(g => g.OrderBy(card => card.CreditLimit)
+                        .FirstOrDefault(card => card.AvailableCredit > 0)
                 ).FirstOrDefault();
+        }
+
+        private bool ExistsDuplicatedDueDates()
+        {
+            return CreditCards
+                .GroupBy(x => x.DueDate.Date)
+                .Any(g => g.Count() > 1);
         }
     }
 }
