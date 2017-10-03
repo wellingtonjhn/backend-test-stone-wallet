@@ -69,6 +69,34 @@ namespace StoneWallet.Domain.Tests
         }
 
         [Fact]
+        public void Should_RemoveCreditCard_When_ExistsInWallet()
+        {
+            // Arrange
+            var user = GetValidUser();
+            var creditCard = GetValidCreditCard();
+            var wallet = new Wallet(user);
+            wallet.AddCreditCard(creditCard);
+            
+            // Act
+            wallet.RemoveCreditCard(creditCard.Number);
+
+            // Assert
+            Assert.Empty(wallet.CreditCards);
+        }
+
+        [Fact]
+        public void Cannot_RemoveCreditCard_When_NotExistsInWallet()
+        {
+            // Arrange
+            var user = GetValidUser();
+            var creditCard = GetValidCreditCard();
+            var wallet = new Wallet(user);
+
+            // Act and Assert
+            Assert.Throws<InvalidOperationException>(() => wallet.RemoveCreditCard(creditCard.Number));
+        }
+
+        [Fact]
         public void Should_ChangeWalletLimit_When_NotExceedsMaxLimit()
         {
             // Arrange
@@ -148,8 +176,30 @@ namespace StoneWallet.Domain.Tests
             // Assert
             var selectedCreditCard = wallet.CreditCards.First(a => a.Number == higherDueDateCreditCard.Number);
             Assert.Equal(200, selectedCreditCard.AvailableCredit);
+            Assert.Equal(1200, wallet.AvailableCredit);
         }
 
+        [Fact]
+        public void Should_MakeAPurchase_With_MinimumLimitCreditCard()
+        {
+            // Arrange
+            var user = GetValidUser();
+            var wallet = new Wallet(user);
+            var minimumLimitCreditCard = new CreditCard("Wellington", 987654321, 789, 500, DateTime.Now.AddDays(30), DateTime.Now.AddYears(1));
+            var anotherCreditCard = new CreditCard("Katia", 123456789, 123, 1000, DateTime.Now.AddDays(30), DateTime.Now.AddYears(1));
+
+            wallet.AddCreditCard(minimumLimitCreditCard);
+            wallet.AddCreditCard(anotherCreditCard);
+
+            // Act
+            wallet.Buy(175);
+
+            // Assert
+            var selectedCreditCard = wallet.CreditCards.First(a => a.Number == minimumLimitCreditCard.Number);
+            Assert.Equal(325, selectedCreditCard.AvailableCredit);
+            Assert.Equal(1325, wallet.AvailableCredit);
+        }
+        
         private static User GetValidUser()
         {
             return new User("Wellington Nascimento", "wellington.jhn@gmail.com", "super_password");
