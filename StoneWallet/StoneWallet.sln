@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StoneWallet.Domain.Tests", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StoneWallet.Api", "StoneWallet.Api\StoneWallet.Api.csproj", "{9B1BB472-1D6A-43F2-807C-0CD396ABB9F2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StoneWallet.Application", "StoneWallet.Application\StoneWallet.Application.csproj", "{F5BB4275-7A17-4734-886C-36632E38937E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StoneWallet.Application", "StoneWallet.Application\StoneWallet.Application.csproj", "{F5BB4275-7A17-4734-886C-36632E38937E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StoneWallet.Repository", "StoneWallet.Repository\StoneWallet.Repository.csproj", "{56E5BE23-58C8-49A6-A210-D23AC17A1169}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{F5BB4275-7A17-4734-886C-36632E38937E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F5BB4275-7A17-4734-886C-36632E38937E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F5BB4275-7A17-4734-886C-36632E38937E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{56E5BE23-58C8-49A6-A210-D23AC17A1169}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{56E5BE23-58C8-49A6-A210-D23AC17A1169}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{56E5BE23-58C8-49A6-A210-D23AC17A1169}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{56E5BE23-58C8-49A6-A210-D23AC17A1169}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
