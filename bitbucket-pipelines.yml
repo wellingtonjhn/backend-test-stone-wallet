@@ -1,0 +1,11 @@
+image: microsoft/dotnet:latest
+
+pipelines:
+  default:
+    - step:
+        caches:
+          - dotnetcore
+        script:
+          - dotnet restore StoneWallet
+          - dotnet build StoneWallet/StoneWallet.sln
+          - dotnet test StoneWallet/StoneWallet.Domain.Tests/StoneWallet.Domain.Tests.csproj
