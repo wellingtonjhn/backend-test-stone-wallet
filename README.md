@@ -10,9 +10,8 @@ Essa api foi criada utilizando as seguintes tecnologias:
 
 * Microsoft ASP.NET Core 2.0
 * Padrão Mediator com a bibilioteca [MediatR](https://github.com/jbogard/MediatR)
-* Autenticação baseada em token JWT
-* Heroku Cloud para hospedagem
-* ---> A DEFINIR: Banco de dados 
+* Validação de comandos (fail-fast) via middleware usando a biblioteca [Fluent Validation](https://github.com/JeremySkinner/FluentValidation)
+
 
 ## Como rodar esse projeto localmente
 
