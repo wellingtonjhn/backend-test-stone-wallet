@@ -11,7 +11,8 @@ Essa api foi criada utilizando as seguintes tecnologias:
 * Microsoft ASP.NET Core 2.0
 * Padrão Mediator com a bibilioteca [MediatR](https://github.com/jbogard/MediatR)
 * Validação de comandos (fail-fast) via middleware usando a biblioteca [Fluent Validation](https://github.com/JeremySkinner/FluentValidation)
-
+* Log com a biblioteca [Log4Net](https://github.com/apache/logging-log4net/)
+* Visualização dos logs da aplicação no [PaperTrail](https://papertrailapp.com) 
 
 ## Como rodar esse projeto localmente
 
