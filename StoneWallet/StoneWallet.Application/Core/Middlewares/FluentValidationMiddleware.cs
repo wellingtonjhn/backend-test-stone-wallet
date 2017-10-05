@@ -34,14 +34,14 @@ namespace StoneWallet.Application.Core.Middlewares
 
         private static Task<TResponse> Errors(IEnumerable<ValidationFailure> failures)
         {
-            var commandErrors = new Response(null);
+            var response = new Response();
 
             foreach (var failure in failures)
             {
-                commandErrors.Errors.Add(failure.PropertyName, failure.ErrorMessage);
+                response.AddError(failure.ErrorMessage);
             }
 
-            return Task.FromResult(commandErrors as TResponse);
+            return Task.FromResult(response as TResponse);
         }
     }
 }

@@ -3,7 +3,7 @@ using StoneWallet.Application.Commands;
 
 namespace StoneWallet.Application.Validators
 {
-    public class CreateUserValidator : AbstractValidator<CreateUser>
+    public class CreateUserValidator : AbstractValidator<CreateUserCommand>
     {
         public CreateUserValidator()
         {

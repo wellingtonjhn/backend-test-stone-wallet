@@ -1,4 +1,5 @@
-﻿using StoneWallet.Domain.Contracts;
+﻿using MongoDB.Driver;
+using StoneWallet.Domain.Contracts;
 using StoneWallet.Domain.Models.Entities;
 using System.Threading.Tasks;
 
@@ -6,16 +7,31 @@ namespace StoneWallet.Repository
 {
     public class UserRepository : IUserRepository
     {
-        public async Task CreateUser(User user)
+        private const string UsersCollection = "users";
+        private readonly IMongoCollection<User> _users;
+
+        public UserRepository(MongoDbContext dbContext)
         {
-            await Task.FromResult(user);
+            _users = dbContext.Database.GetCollection<User>(UsersCollection);
         }
 
-        public async Task<User> Authenticate(string username, string password)
+        public async Task CreateUser(User user)
         {
-            User user = null;
+            await _users.InsertOneAsync(user);
+        }
 
-            return await Task.FromResult(user);
+        public async Task<bool> ExistsUser(string email)
+        {
+            var user = await _users.Find(u => u.Email.Equals(email)).FirstOrDefaultAsync();
+            return user != null;
+        }
+
+        public async Task<User> Authenticate(string email, string password)
+        {
+            var user = await _users.Find(u => u.Email.Equals(email) && u.Password.Equals(password))
+                .FirstOrDefaultAsync();
+
+            return user;
         }
     }
 }

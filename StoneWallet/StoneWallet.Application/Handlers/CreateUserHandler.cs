@@ -1,14 +1,13 @@
 ﻿using MediatR;
 using StoneWallet.Application.Commands;
 using StoneWallet.Application.Core.Messages;
-using StoneWallet.Application.Events;
 using StoneWallet.Domain.Contracts;
 using StoneWallet.Domain.Models.Entities;
 using System.Threading.Tasks;
 
 namespace StoneWallet.Application.Handlers
 {
-    public class CreateUserHandler : IAsyncRequestHandler<CreateUser, Response>
+    public class CreateUserHandler : IAsyncRequestHandler<CreateUserCommand, Response>
     {
         private readonly IUserRepository _repository;
 
@@ -17,13 +16,20 @@ namespace StoneWallet.Application.Handlers
             _repository = repository;
         }
 
-        public async Task<Response> Handle(CreateUser message)
+        public async Task<Response> Handle(CreateUserCommand message)
         {
+            var existsUser = await _repository.ExistsUser(message.Email);
+
+            if (existsUser)
+            {
+                return new Response().AddError("Já existe um usuário com esse e-mail");
+            }
+
             var user = new User(message.Name, message.Email, message.Password);
 
             await _repository.CreateUser(user);
 
-            return new Response(new UserCreated(user));
+            return new Response(user);
         }
     }
 }

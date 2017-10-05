@@ -1,11 +1,11 @@
-﻿using System;
+﻿using MongoDB.Bson;
+using System;
 
 namespace StoneWallet.Domain.Models.Entities
 {
     public abstract class Entity
     {
-        public Guid Id { get; } = Guid.NewGuid();
+        public ObjectId Id { get; } = ObjectId.GenerateNewId();
         public DateTime CreationDate { get; } = DateTime.Now;
-        public DateTime LastModificationDate { get; protected set; }
     }
 }
