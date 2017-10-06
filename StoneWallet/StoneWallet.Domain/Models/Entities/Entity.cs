@@ -1,11 +1,13 @@
 ﻿using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 using System;
 
 namespace StoneWallet.Domain.Models.Entities
 {
     public abstract class Entity
     {
-        public ObjectId Id { get; } = ObjectId.GenerateNewId();
-        public DateTime CreationDate { get; } = DateTime.Now;
+        [BsonRepresentation(BsonType.ObjectId)]
+        public string Id { get; protected set; }
+        public DateTime CreationDate { get; protected set; } = DateTime.Now;
     }
 }

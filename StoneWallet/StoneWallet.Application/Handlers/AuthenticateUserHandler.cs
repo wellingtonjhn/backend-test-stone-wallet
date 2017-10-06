@@ -3,6 +3,7 @@ using StoneWallet.Application.Commands;
 using StoneWallet.Application.Core.Messages;
 using StoneWallet.Domain.Contracts;
 using System.Threading.Tasks;
+using StoneWallet.Domain.Models.ValueTypes;
 
 namespace StoneWallet.Application.Handlers
 {
@@ -16,7 +17,8 @@ namespace StoneWallet.Application.Handlers
         }
         public async Task<Response> Handle(AuthenticateUserCommand message)
         {
-            var user = await _repository.Authenticate(message.Email, message.Password);
+            var password = new Password(message.Password);
+            var user = await _repository.Authenticate(message.Email, password.Encoded);
 
             if (user == null)
             {

@@ -7,7 +7,7 @@ namespace StoneWallet.Application.Core.Messages
     {
         private readonly IList<string> _errors = new List<string>();
 
-        public IEnumerable<string> Errors { get; } 
+        public IEnumerable<string> Errors { get; }
         public object Result { get; }
 
         public Response()
@@ -15,7 +15,7 @@ namespace StoneWallet.Application.Core.Messages
             Errors = new ReadOnlyCollection<string>(_errors);
         }
 
-        public Response(object result) 
+        public Response(object result)
             : this()
         {
             Result = result;

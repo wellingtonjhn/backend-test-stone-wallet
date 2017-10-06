@@ -4,6 +4,7 @@ using StoneWallet.Application.Core.Messages;
 using StoneWallet.Domain.Contracts;
 using StoneWallet.Domain.Models.Entities;
 using System.Threading.Tasks;
+using StoneWallet.Domain.Models.ValueTypes;
 
 namespace StoneWallet.Application.Handlers
 {
@@ -25,7 +26,8 @@ namespace StoneWallet.Application.Handlers
                 return new Response().AddError("Já existe um usuário com esse e-mail");
             }
 
-            var user = new User(message.Name, message.Email, message.Password);
+            var password = new Password(message.Password);
+            var user = new User(message.Name, message.Email, password.Encoded);
 
             await _repository.CreateUser(user);
 
