@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace StoneWallet.Application.Handlers
 {
-    public class QueryUserInformationHandler : IAsyncRequestHandler<QueryUserInformation, Response>
+    public class QueryUserHandler : IAsyncRequestHandler<QueryUserInformation, Response>
     {
         private readonly IUserRepository _repository;
 
-        public QueryUserInformationHandler(IUserRepository repository)
+        public QueryUserHandler(IUserRepository repository)
         {
             _repository = repository;
         }

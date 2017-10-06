@@ -10,6 +10,7 @@ namespace StoneWallet.Api.Extensions
         {
             services.AddScoped<MongoDbContext>();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IWalletRepository, WalletRepository>();
         }
     }
 }

@@ -11,10 +11,12 @@ namespace StoneWallet.Application.Handlers
     public class CreateUserHandler : IAsyncRequestHandler<CreateUserCommand, Response>
     {
         private readonly IUserRepository _repository;
+        private readonly IMediator _mediator;
 
-        public CreateUserHandler(IUserRepository repository)
+        public CreateUserHandler(IUserRepository repository, IMediator mediator)
         {
             _repository = repository;
+            _mediator = mediator;
         }
 
         public async Task<Response> Handle(CreateUserCommand message)
@@ -30,6 +32,7 @@ namespace StoneWallet.Application.Handlers
             var user = new User(message.Name, message.Email, password.Encoded);
 
             await _repository.CreateUser(user);
+            await _mediator.Publish(new CreateWalletCommand(user));
 
             return new Response(new UserResponse(user.Id, user.Email, user.Name));
         }

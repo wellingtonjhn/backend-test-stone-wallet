@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MongoDB.Bson;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -12,19 +13,19 @@ namespace StoneWallet.Domain.Models.Entities
     {
         private IList<CreditCard> _creditCards { get; } = new List<CreditCard>();
 
-        public User User { get; }
+        public ObjectId User { get; private set; }
         public decimal WalletLimit { get; private set; }
+        public IReadOnlyCollection<CreditCard> CreditCards { get; private set; }
         public decimal MaximumCreditLimit { get { return CreditCards.Sum(a => a.CreditLimit); } }
         public decimal AvailableCredit { get { return CreditCards.Sum(a => a.AvailableCredit); } }
-        public IReadOnlyCollection<CreditCard> CreditCards { get; }
 
         /// <summary>
         /// Nova wallet
         /// </summary>
-        /// <param name="user">Usuário dono da wallet</param>
-        public Wallet(User user)
+        /// <param name="userId">Usuário dono da wallet</param>
+        public Wallet(ObjectId userId)
         {
-            User = user;
+            User = userId;
             CreditCards = new ReadOnlyCollection<CreditCard>(_creditCards);
         }
 

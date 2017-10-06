@@ -15,6 +15,7 @@ namespace StoneWallet.Application.Handlers
         {
             _repository = repository;
         }
+
         public async Task<Response> Handle(AuthenticateUserCommand message)
         {
             var password = new Password(message.Password);
