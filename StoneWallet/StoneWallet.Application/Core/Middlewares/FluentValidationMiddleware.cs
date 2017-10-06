@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using FluentValidation.Results;
 using MediatR;
-using StoneWallet.Application.Core.Messages;
+using StoneWallet.Application.Responses;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;

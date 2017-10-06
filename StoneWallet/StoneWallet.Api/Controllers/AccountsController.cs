@@ -5,7 +5,8 @@ using Microsoft.Extensions.Options;
 using StoneWallet.Api.Extensions;
 using StoneWallet.Api.Settings;
 using StoneWallet.Application.Commands;
-using StoneWallet.Domain.Models.Entities;
+using StoneWallet.Application.Queries;
+using StoneWallet.Application.Responses;
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
@@ -29,6 +30,21 @@ namespace StoneWallet.Api.Controllers
             _jwtSettings = jwtSettings.Value;
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Get()
+        {
+            var userId = HttpContext.User.Identity.Name;
+
+            var query = new QueryUserInformation(userId);
+            var response = await _mediator.Send(query);
+
+            if (response == null)
+            {
+                return NoContent();
+            }
+            return Ok(response.Result);
+        }
+
         /// <summary>
         /// Cria um novo usuário
         /// </summary>
@@ -42,7 +58,8 @@ namespace StoneWallet.Api.Controllers
             {
                 return BadRequest(response.Errors);
             }
-            return Ok(response.Result);
+
+            return Created("/accounts", response.Result);
         }
 
         /// <summary>
@@ -51,7 +68,7 @@ namespace StoneWallet.Api.Controllers
         /// <param name="command">Informações de login</param>
         /// <returns>Token JWT</returns>
         [HttpPost, AllowAnonymous, Route("login")]
-        public async Task<IActionResult> Authenticate(AuthenticateUserCommand command)
+        public async Task<IActionResult> Authenticate([FromBody] AuthenticateUserCommand command)
         {
             var response = await _mediator.Send(command);
             if (response.Errors.Any())
@@ -59,13 +76,13 @@ namespace StoneWallet.Api.Controllers
                 return BadRequest(response.Errors);
             }
 
-            var identity = GetClaimsIdentity((User)response.Result);
+            var identity = GetClaimsIdentity((UserResponse)response.Result);
             var jwt = identity.CreateJwtToken(_jwtSettings, _signingSettings);
 
             return Ok(jwt);
         }
 
-        private ClaimsIdentity GetClaimsIdentity(User user)
+        private ClaimsIdentity GetClaimsIdentity(UserResponse user)
         {
             return new ClaimsIdentity(
                 new GenericIdentity(user.Id, "Login"),

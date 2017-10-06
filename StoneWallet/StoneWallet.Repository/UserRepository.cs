@@ -15,6 +15,13 @@ namespace StoneWallet.Repository
             _users = dbContext.Database.GetCollection<User>(UsersCollection);
         }
 
+        public async Task<User> Get(string id)
+        {
+            return await _users
+                .Find(u => u.Id.Equals(id))
+                .FirstOrDefaultAsync();
+        }
+
         public async Task CreateUser(User user)
         {
             await _users.InsertOneAsync(user);
@@ -22,16 +29,18 @@ namespace StoneWallet.Repository
 
         public async Task<bool> ExistsUser(string email)
         {
-            var user = await _users.Find(u => u.Email.Equals(email)).FirstOrDefaultAsync();
+            var user = await _users
+                .Find(u => u.Email.Equals(email))
+                .FirstOrDefaultAsync();
+
             return user != null;
         }
 
         public async Task<User> Authenticate(string email, string password)
         {
-            var user = await _users.Find(u => u.Email.Equals(email) && u.Password.Equals(password))
+            return await _users
+                .Find(u => u.Email.Equals(email) && u.Password.Equals(password))
                 .FirstOrDefaultAsync();
-
-            return user;
         }
     }
 }

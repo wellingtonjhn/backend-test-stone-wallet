@@ -36,8 +36,8 @@ namespace StoneWallet.Api.Extensions
 
         public static void AddJwtOptions(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddSingleton(new SigningSettings());
-            services.Configure<JwtSettings>(configuration.GetSection(nameof(JwtSettings)));
+            services.AddSingleton<SigningSettings>();
+            services.Configure<JwtSettings>(configuration.GetSection("Authentication:JwtSettings"));
 
             var provider = services.BuildServiceProvider();
             var tokenSettings = provider.GetService<IOptions<JwtSettings>>();
@@ -59,7 +59,7 @@ namespace StoneWallet.Api.Extensions
                 paramsValidation.ValidAudience = tokenSettings.Value.Audience;
 
                 paramsValidation.ValidateIssuerSigningKey = true;
-                paramsValidation.IssuerSigningKey = signingSettings.Key;
+                paramsValidation.IssuerSigningKey = signingSettings.SigningCredentials.Key;
 
                 paramsValidation.RequireExpirationTime = true;
                 paramsValidation.ValidateLifetime = true;
@@ -97,7 +97,8 @@ namespace StoneWallet.Api.Extensions
             return new
             {
                 access_token = encodedJwt,
-                expires_in = (int)jwtSettings.ValidFor.TotalSeconds
+                token_type = JwtBearerDefaults.AuthenticationScheme.ToLower(),
+                expires_in = (int)jwtSettings.ValidFor.TotalSeconds,
             };
         }
     }

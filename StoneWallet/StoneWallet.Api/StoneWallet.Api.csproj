@@ -17,10 +17,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="log4net.config" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\StoneWallet.Application\StoneWallet.Application.csproj" />
     <ProjectReference Include="..\StoneWallet.Repository\StoneWallet.Repository.csproj" />
   </ItemGroup>

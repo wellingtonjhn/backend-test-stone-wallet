@@ -23,10 +23,10 @@ namespace StoneWallet.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddRepository();
-            services.AddLogging();
             services.AddMediatR(Configuration);
             services.AddJwtOptions(Configuration);
             services.AddMvcWithPolicy();
+            services.AddLogging();
             services.AddSingleton(Configuration);
         }
 
@@ -37,7 +37,7 @@ namespace StoneWallet.Api
                 app.UseDeveloperExceptionPage();
             }
 
-            loggerFactory.AddLog4Net();
+            loggerFactory.AddLog4Net("log4net.config");
 
             app.UseErrorHandling();
             app.UseAuthenticationScheme(JwtBearerDefaults.AuthenticationScheme);

@@ -1,6 +1,7 @@
-﻿using Microsoft.IdentityModel.Tokens;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
 using System;
-using System.Security.Cryptography;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace StoneWallet.Api.Settings
@@ -10,42 +11,23 @@ namespace StoneWallet.Api.Settings
         public string Audience { get; set; }
         public string Issuer { get; set; }
         public int ValidForMinutes { get; set; }
-        public string Subject { get; set; }
 
-        public TimeSpan ValidFor => TimeSpan.FromMinutes(ValidForMinutes);
         public DateTime NotBefore => DateTime.UtcNow;
         public DateTime IssuedAt => DateTime.UtcNow;
-        public DateTime Expiration => IssuedAt.Add(ValidFor);
+        public TimeSpan ValidFor => TimeSpan.FromMinutes(ValidForMinutes);
+        public DateTime Expiration => IssuedAt.AddMinutes(ValidFor.TotalMinutes);
 
         public Func<Task<string>> JtiGenerator => () => Task.FromResult(Guid.NewGuid().ToString());
-
-        //public SecurityKey Key { get; }
-        //public SigningCredentials SigningCredentials { get; }
-
-        //public JwtSettings()
-        //{
-        //    using (var provider = new RSACryptoServiceProvider(2048))
-        //    {
-        //        Key = new RsaSecurityKey(provider.ExportParameters(true));
-        //    }
-        //    SigningCredentials = new SigningCredentials(Key, SecurityAlgorithms.RsaSha256Signature);
-        //}
     }
 
     public class SigningSettings
     {
-        public SecurityKey Key { get; }
         public SigningCredentials SigningCredentials { get; }
 
-        public SigningSettings()
+        public SigningSettings(IConfiguration configuration)
         {
-            using (var provider = new RSACryptoServiceProvider(2048))
-            {
-                Key = new RsaSecurityKey(provider.ExportParameters(true));
-            }
-
-            SigningCredentials = new SigningCredentials(
-                Key, SecurityAlgorithms.RsaSha256Signature);
+            var symmetricKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Authentication:SigningSettings:Key"]));
+            SigningCredentials = new SigningCredentials(symmetricKey, SecurityAlgorithms.HmacSha256Signature);
         }
     }
 }

@@ -1,10 +1,10 @@
 ﻿using MediatR;
 using StoneWallet.Application.Commands;
-using StoneWallet.Application.Core.Messages;
+using StoneWallet.Application.Responses;
 using StoneWallet.Domain.Contracts;
 using StoneWallet.Domain.Models.Entities;
-using System.Threading.Tasks;
 using StoneWallet.Domain.Models.ValueTypes;
+using System.Threading.Tasks;
 
 namespace StoneWallet.Application.Handlers
 {
@@ -31,7 +31,7 @@ namespace StoneWallet.Application.Handlers
 
             await _repository.CreateUser(user);
 
-            return new Response(user);
+            return new Response(new UserResponse(user.Id, user.Email, user.Name));
         }
     }
 }

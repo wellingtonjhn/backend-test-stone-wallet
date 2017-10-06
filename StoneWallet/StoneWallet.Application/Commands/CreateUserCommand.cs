@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using StoneWallet.Application.Core.Messages;
+using StoneWallet.Application.Responses;
 
 namespace StoneWallet.Application.Commands
 {

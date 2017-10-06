@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using StoneWallet.Application.Core.Messages;
+using StoneWallet.Application.Responses;
 
 namespace StoneWallet.Application.Commands
 {
@@ -7,11 +7,11 @@ namespace StoneWallet.Application.Commands
     {
         public string Email { get; set; }
         public string Password { get; set; }
-        
-        //public AuthenticateUserCommand(string email, string password)
-        //{
-        //    Email = email;
-        //    Password = password;
-        //}
+
+        public AuthenticateUserCommand(string email, string password)
+        {
+            Email = email;
+            Password = password;
+        }
     }
 }
