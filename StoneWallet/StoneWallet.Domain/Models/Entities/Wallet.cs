@@ -168,7 +168,11 @@ namespace StoneWallet.Domain.Models.Entities
         {
             var changeWalletLimitMessage = $"Altere o limite da Wallet para até {MaximumCreditCardsLimit:C} e tente novamente";
 
-            if (WalletLimit < amount)
+            if (amount > WalletLimit)
+            {
+                throw new InvalidOperationException($"O limite máximo para compra é de {WalletLimit:C}");
+            }
+            if (WalletLimit < MaximumCreditCardsLimit)
             {
                 throw new InvalidOperationException($"O limite máximo para compra é de {WalletLimit:C}. {changeWalletLimitMessage}");
             }

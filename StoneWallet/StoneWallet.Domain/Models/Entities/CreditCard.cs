@@ -48,7 +48,14 @@ namespace StoneWallet.Domain.Models.Entities
         /// Liberar limite de crédito
         /// </summary>
         /// <param printedName="amount">Valor a ser liberado</param>
-        public void ReleaseCredit(decimal amount) => AvailableCredit += amount;
+        public void ReleaseCredit(decimal amount)
+        {
+            if (amount > PendingPayment)
+            {
+                throw new InvalidOperationException($"O valor que está sendo pago ({amount:C}) é maior que o pendente de pagamento ({PendingPayment:C}) para esse cartão");
+            }
+            AvailableCredit += amount;
+        }
 
         /// <summary>
         /// Realiza uma compra no cartão
