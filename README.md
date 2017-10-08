@@ -14,6 +14,7 @@ Essa api foi criada utilizando as seguintes tecnologias:
 * Log com a biblioteca [Log4Net](https://github.com/apache/logging-log4net/)
 * Visualização dos logs da aplicação no [PaperTrail](https://papertrailapp.com) 
 * Autenticação de usuário baseada em JWT [Json Web Token](https://tools.ietf.org/html/rfc7519)
+* Banco de dados PostgreSQL no Heroku [Heroku Data](https://www.heroku.com/postgres)
 
 ## Como rodar esse projeto localmente
 

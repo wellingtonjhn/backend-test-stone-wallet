@@ -2,16 +2,16 @@
 using StoneWallet.Application.Commands;
 using StoneWallet.Application.Responses;
 using StoneWallet.Domain.Contracts;
-using StoneWallet.Domain.Models.ValueTypes;
 using System.Threading.Tasks;
+using StoneWallet.Domain.Models.ValueObjects;
 
 namespace StoneWallet.Application.Handlers
 {
     public class AuthenticateUserHandler : IAsyncRequestHandler<AuthenticateUserCommand, Response>
     {
-        private readonly IUserRepository _repository;
+        private readonly IUsersRepository _repository;
 
-        public AuthenticateUserHandler(IUserRepository repository)
+        public AuthenticateUserHandler(IUsersRepository repository)
         {
             _repository = repository;
         }
@@ -26,7 +26,7 @@ namespace StoneWallet.Application.Handlers
                 return new Response().AddError("Usuário ou senha inválidos");
             }
 
-            return new Response(new UserResponse(user.Id, user.Email, user.Name));
+            return new Response(new UserResponse(user.Id, user.Email, user.Name, user.CreationDate));
         }
     }
 }

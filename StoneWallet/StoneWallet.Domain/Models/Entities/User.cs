@@ -1,21 +1,30 @@
-﻿using System;
+﻿using StoneWallet.Domain.Models.ValueObjects;
+using System;
 
 namespace StoneWallet.Domain.Models.Entities
 {
     /// <summary>
     /// Representa um usuário do sistema
     /// </summary>
-    public sealed class User : Entity
+    public class User : Entity
     {
-        public string Name { get; private set; }
-        public string Password { get; private set; }
-        public string Email { get; private set; }
+        public string Name { get; }
+        public string Email { get; }
+        public Password Password { get; private set; }
 
+        protected User() { }
+
+        /// <summary>
+        /// Cria um novo usuário no sistema
+        /// </summary>
+        /// <param name="name">Nome do usuário</param>
+        /// <param name="email">E-mail de acesso</param>
+        /// <param name="password">Senha de acesso</param>
         public User(string name, string email, string password)
         {
             Name = name;
-            Password = password;
             Email = email;
+            Password = new Password(password);
         }
 
         /// <summary>
@@ -30,7 +39,7 @@ namespace StoneWallet.Domain.Models.Entities
                 throw new InvalidOperationException("As senhas não conferem");
             }
 
-            Password = newPassword;
+            Password = new Password(newPassword);
         }
     }
 }

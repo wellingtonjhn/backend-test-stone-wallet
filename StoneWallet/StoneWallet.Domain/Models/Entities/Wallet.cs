@@ -1,5 +1,4 @@
-﻿using MongoDB.Bson;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -9,24 +8,28 @@ namespace StoneWallet.Domain.Models.Entities
     /// <summary>
     /// Representa uma carteira de crédito
     /// </summary>
-    public sealed class Wallet : Entity
+    public class Wallet : Entity
     {
-        private IList<CreditCard> _creditCards { get; } = new List<CreditCard>();
-
-        public ObjectId User { get; private set; }
+        public Guid UserId { get; }
         public decimal WalletLimit { get; private set; }
-        public IReadOnlyCollection<CreditCard> CreditCards { get; private set; }
+        public IReadOnlyCollection<CreditCard> CreditCards { get; }
         public decimal MaximumCreditLimit { get { return CreditCards.Sum(a => a.CreditLimit); } }
         public decimal AvailableCredit { get { return CreditCards.Sum(a => a.AvailableCredit); } }
 
+        private IList<CreditCard> _creditCards { get; } = new List<CreditCard>();
+
+        protected Wallet()
+        {
+            CreditCards = new ReadOnlyCollection<CreditCard>(_creditCards);
+        }
+
         /// <summary>
-        /// Nova wallet
+        /// Cria uma nova Wallet para um usuário
         /// </summary>
         /// <param name="userId">Usuário dono da wallet</param>
-        public Wallet(ObjectId userId)
+        public Wallet(Guid userId) : this()
         {
-            User = userId;
-            CreditCards = new ReadOnlyCollection<CreditCard>(_creditCards);
+            UserId = userId;
         }
 
         /// <summary>

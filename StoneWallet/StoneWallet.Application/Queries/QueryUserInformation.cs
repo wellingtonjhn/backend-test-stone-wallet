@@ -1,13 +1,14 @@
 ﻿using MediatR;
 using StoneWallet.Application.Responses;
+using System;
 
 namespace StoneWallet.Application.Queries
 {
     public class QueryUserInformation : IRequest<Response>
     {
-        public string UserId { get; }
+        public Guid UserId { get; }
 
-        public QueryUserInformation(string userId)
+        public QueryUserInformation(Guid userId)
         {
             UserId = userId;
         }

@@ -35,7 +35,7 @@ namespace StoneWallet.Api.Controllers
         {
             var userId = HttpContext.User.Identity.Name;
 
-            var query = new QueryUserInformation(userId);
+            var query = new QueryUserInformation(new Guid(userId));
             var response = await _mediator.Send(query);
 
             if (response == null)
@@ -85,7 +85,7 @@ namespace StoneWallet.Api.Controllers
         private ClaimsIdentity GetClaimsIdentity(UserResponse user)
         {
             return new ClaimsIdentity(
-                new GenericIdentity(user.Id, "Login"),
+                new GenericIdentity(user.Id.ToString(), "Login"),
                 new[] {
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString("N")),
                     new Claim(JwtRegisteredClaimNames.UniqueName, user.Email),

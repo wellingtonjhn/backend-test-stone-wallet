@@ -1,5 +1,4 @@
 ﻿using MediatR;
-using MongoDB.Bson;
 using StoneWallet.Application.Commands;
 using StoneWallet.Domain.Contracts;
 using StoneWallet.Domain.Models.Entities;
@@ -18,7 +17,7 @@ namespace StoneWallet.Application.Handlers
 
         public async Task Handle(CreateWalletCommand notification)
         {
-            var wallet = new Wallet(new ObjectId(notification.User.Id));
+            var wallet = new Wallet(notification.User.Id);
 
             await _repository.CreateWallet(wallet);
         }

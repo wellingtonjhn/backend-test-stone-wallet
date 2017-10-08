@@ -8,9 +8,9 @@ namespace StoneWallet.Application.Handlers
 {
     public class QueryUserHandler : IAsyncRequestHandler<QueryUserInformation, Response>
     {
-        private readonly IUserRepository _repository;
+        private readonly IUsersRepository _repository;
 
-        public QueryUserHandler(IUserRepository repository)
+        public QueryUserHandler(IUsersRepository repository)
         {
             _repository = repository;
         }
@@ -19,7 +19,12 @@ namespace StoneWallet.Application.Handlers
         {
             var user = await _repository.Get(message.UserId);
 
-            return new Response(new UserResponse(user.Id, user.Email, user.Name));
+            if (user == null)
+            {
+                return new Response().AddError("Nenhum registro encontrado");
+            }
+
+            return new Response(new UserResponse(user.Id, user.Email, user.Name, user.CreationDate));
         }
     }
 }

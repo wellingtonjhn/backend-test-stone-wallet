@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using StoneWallet.Application.Queries;
+using System;
 using System.Threading.Tasks;
 
 namespace StoneWallet.Api.Controllers
@@ -20,7 +21,7 @@ namespace StoneWallet.Api.Controllers
         {
             var userId = HttpContext.User.Identity.Name;
 
-            var query = new QueryWalletInformation(userId);
+            var query = new QueryWalletInformation(new Guid(userId));
             var response = await _mediator.Send(query);
 
             if (response == null)

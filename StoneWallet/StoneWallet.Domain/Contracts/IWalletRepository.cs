@@ -1,4 +1,5 @@
-﻿using StoneWallet.Domain.Models.Entities;
+﻿using System;
+using StoneWallet.Domain.Models.Entities;
 using System.Threading.Tasks;
 
 namespace StoneWallet.Domain.Contracts
@@ -6,6 +7,6 @@ namespace StoneWallet.Domain.Contracts
     public interface IWalletRepository
     {
         Task CreateWallet(Wallet wallet);
-        Task<Wallet> GetWalletByUser(string userId);
+        Task<Wallet> GetWalletByUser(Guid userId);
     }
 }

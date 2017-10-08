@@ -3,7 +3,7 @@ using System.IO;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace StoneWallet.Domain.Models.ValueTypes
+namespace StoneWallet.Domain.Models.ValueObjects
 {
     public sealed class Password
     {
@@ -16,7 +16,7 @@ namespace StoneWallet.Domain.Models.ValueTypes
 
         private static string EncodePassword(string password)
         {
-            var result = string.Empty;
+            string result;
             var bytes = Encoding.Unicode.GetBytes(password);
 
             using (var stream = new MemoryStream())

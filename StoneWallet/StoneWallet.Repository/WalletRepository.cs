@@ -1,31 +1,50 @@
-﻿using MongoDB.Bson;
-using MongoDB.Driver;
+﻿using Dapper;
+using Microsoft.Extensions.Configuration;
 using StoneWallet.Domain.Contracts;
 using StoneWallet.Domain.Models.Entities;
+using System;
 using System.Threading.Tasks;
 
 namespace StoneWallet.Repository
 {
-    public class WalletRepository : IWalletRepository
+    public class WalletRepository : Repository, IWalletRepository
     {
-        private const string WalletCollection = "wallets";
-        private readonly IMongoCollection<Wallet> _wallets;
-
-        public WalletRepository(MongoDbContext dbContext)
+        public WalletRepository(IConfiguration configuration)
+            : base(configuration)
         {
-            _wallets = dbContext.Database.GetCollection<Wallet>(WalletCollection);
         }
 
         public async Task CreateWallet(Wallet wallet)
         {
-            await _wallets.InsertOneAsync(wallet);
+            using (var connection = GetConnection())
+            {
+                const string sql = @"INSERT INTO WALLETS (ID, USERID, WALLETLIMIT, CREATIONDATE) 
+                                     VALUES (@ID, @USERID, @WALLETLIMIT, @CREATIONDATE)";
+
+                await connection.ExecuteAsync(sql, new
+                {
+                    wallet.Id,
+                    wallet.UserId,
+                    wallet.WalletLimit,
+                    wallet.CreationDate
+                });
+            }
         }
 
-        public async Task<Wallet> GetWalletByUser(string userId)
+        public async Task<Wallet> GetWalletByUser(Guid userId)
         {
-            return await _wallets
-                .Find(u => u.User.Equals(new ObjectId(userId)))
-                .FirstOrDefaultAsync();
+            Wallet wallet;
+
+            using (var connection = GetConnection())
+            {
+                const string sql = @"SELECT ID, USERID, WALLETLIMIT, CREATIONDATE FROM WALLETS WHERE USERID = @USERID";
+
+                wallet = await connection.QueryFirstOrDefaultAsync<Wallet>(sql, new
+                {
+                    userId
+                });
+            }
+            return wallet;
         }
     }
 }

@@ -8,9 +8,14 @@ namespace StoneWallet.Domain.Tests
         [Fact]
         public void Should_CreateUser()
         {
-            var user = new User("Wellington Nascimento", "wellington.jhn@gmail.com", "super_password");
+            const string password = "super_password";
+            var user = new User("Wellington Nascimento", "wellington.jhn@gmail.com", password);
 
             Assert.NotNull(user);
+            Assert.NotEmpty(user.Name);
+            Assert.NotEmpty(user.Email);
+            Assert.NotEmpty(user.Password.Encoded);
+            Assert.NotEqual(user.Password.Encoded, password);
         }
     }
 }
