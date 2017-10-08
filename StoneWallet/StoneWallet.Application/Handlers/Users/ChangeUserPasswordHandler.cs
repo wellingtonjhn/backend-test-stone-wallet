@@ -1,11 +1,11 @@
 ﻿using MediatR;
-using StoneWallet.Application.Commands;
+using StoneWallet.Application.Commands.Users;
 using StoneWallet.Application.Responses;
 using StoneWallet.Domain.Contracts;
 using System;
 using System.Threading.Tasks;
 
-namespace StoneWallet.Application.Handlers
+namespace StoneWallet.Application.Handlers.Users
 {
     public class ChangeUserPasswordHandler : IAsyncRequestHandler<ChangeUserPasswordCommand, Response>
     {

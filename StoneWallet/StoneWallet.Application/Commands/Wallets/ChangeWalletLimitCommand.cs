@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using StoneWallet.Application.Responses;
 
-namespace StoneWallet.Application.Commands
+namespace StoneWallet.Application.Commands.Wallets
 {
     public class ChangeWalletLimitCommand : IRequest<Response>
     {

@@ -1,7 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using StoneWallet.Application.Commands;
-using StoneWallet.Application.Queries;
+using StoneWallet.Application.Commands.Wallets;
 using System.Linq;
 using System.Threading.Tasks;
 

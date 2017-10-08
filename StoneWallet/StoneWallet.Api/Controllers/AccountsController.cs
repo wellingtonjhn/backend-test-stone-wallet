@@ -4,8 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using StoneWallet.Api.Extensions;
 using StoneWallet.Api.Settings;
-using StoneWallet.Application.Commands;
-using StoneWallet.Application.Queries;
+using StoneWallet.Application.Commands.Users;
 using StoneWallet.Application.Responses;
 using System;
 using System.IdentityModel.Tokens.Jwt;
@@ -31,27 +30,11 @@ namespace StoneWallet.Api.Controllers
         }
 
         /// <summary>
-        /// Obtém os dados do usuário logado
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet]
-        public async Task<IActionResult> Get()
-        {
-            var response = await _mediator.Send(new QueryUserInformation());
-
-            if (response == null)
-            {
-                return NoContent();
-            }
-            return Ok(response.Result);
-        }
-
-        /// <summary>
         /// Cria um novo usuário
         /// </summary>
         /// <param name="command">Informações do usuário</param>
         /// <returns>Informações básicas do usuário recém criado</returns>
-        [HttpPost, AllowAnonymous]
+        [HttpPost, AllowAnonymous, Route("register")]
         public async Task<IActionResult> CreateUser([FromBody]CreateUserCommand command)
         {
             var response = await _mediator.Send(command);
@@ -60,7 +43,7 @@ namespace StoneWallet.Api.Controllers
                 return BadRequest(response.Errors);
             }
 
-            return Created("/accounts", response.Result);
+            return Created("accounts/profile", response.Result);
         }
 
         /// <summary>
@@ -84,11 +67,27 @@ namespace StoneWallet.Api.Controllers
         }
 
         /// <summary>
+        /// Obtém os dados do usuário logado
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet, Route("profile")]
+        public async Task<IActionResult> Get()
+        {
+            var response = await _mediator.Send(new QueryUserInformation());
+
+            if (response == null)
+            {
+                return NoContent();
+            }
+            return Ok(response.Result);
+        }
+
+        /// <summary>
         /// Alteara a senha do usuário logado
         /// </summary>
         /// <param name="command">Comando de alteração de senha</param>
         /// <returns>Mensagem de sucesso ou de erro</returns>
-        [HttpPut, Route("password")]
+        [HttpPut, Route("profile/password")]
         public async Task<IActionResult> ChangePassword([FromBody] ChangeUserPasswordCommand command)
         {
             var response = await _mediator.Send(command);

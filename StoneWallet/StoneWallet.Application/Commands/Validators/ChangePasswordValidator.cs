@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
-using StoneWallet.Application.Commands;
+using StoneWallet.Application.Commands.Users;
 
-namespace StoneWallet.Application.Validators
+namespace StoneWallet.Application.Commands.Validators
 {
     public class ChangePasswordValidator : AbstractValidator<ChangeUserPasswordCommand>
     {

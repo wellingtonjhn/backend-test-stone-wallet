@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
-using StoneWallet.Application.Commands;
+using StoneWallet.Application.Commands.Wallets;
 
-namespace StoneWallet.Application.Validators
+namespace StoneWallet.Application.Commands.Validators
 {
     public class ChangeWalletLimitValidator : AbstractValidator<ChangeWalletLimitCommand>
     {

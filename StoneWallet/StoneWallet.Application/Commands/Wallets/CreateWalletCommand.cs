@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using StoneWallet.Domain.Models.Entities;
 
-namespace StoneWallet.Application.Commands
+namespace StoneWallet.Application.Commands.Wallets
 {
     public class CreateWalletCommand : INotification
     {

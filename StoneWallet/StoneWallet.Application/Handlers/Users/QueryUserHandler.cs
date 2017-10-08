@@ -1,10 +1,10 @@
 ﻿using MediatR;
-using StoneWallet.Application.Queries;
+using StoneWallet.Application.Commands.Users;
 using StoneWallet.Application.Responses;
 using StoneWallet.Domain.Contracts;
 using System.Threading.Tasks;
 
-namespace StoneWallet.Application.Handlers
+namespace StoneWallet.Application.Handlers.Users
 {
     public class QueryUserHandler : IAsyncRequestHandler<QueryUserInformation, Response>
     {
