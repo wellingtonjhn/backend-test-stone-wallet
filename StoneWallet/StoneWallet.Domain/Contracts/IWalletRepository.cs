@@ -8,5 +8,6 @@ namespace StoneWallet.Domain.Contracts
     {
         Task CreateWallet(Wallet wallet);
         Task<Wallet> GetWalletByUser(Guid userId);
+        Task ChangeWalletLimit(Wallet wallet);
     }
 }

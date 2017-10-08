@@ -2,8 +2,9 @@
 using StoneWallet.Application.Commands;
 using StoneWallet.Application.Responses;
 using StoneWallet.Domain.Contracts;
-using System.Threading.Tasks;
 using StoneWallet.Domain.Models.ValueObjects;
+using System;
+using System.Threading.Tasks;
 
 namespace StoneWallet.Application.Handlers
 {
@@ -18,15 +19,19 @@ namespace StoneWallet.Application.Handlers
 
         public async Task<Response> Handle(AuthenticateUserCommand message)
         {
-            var password = new Password(message.Password);
-            var user = await _repository.Authenticate(message.Email, password.Encoded);
-
-            if (user == null)
+            try
             {
-                return new Response().AddError("Usuário ou senha inválidos");
-            }
+                var password = new Password(message.Password);
+                var user = await _repository.Authenticate(message.Email, password.Encoded);
 
-            return new Response(new UserResponse(user.Id, user.Email, user.Name, user.CreationDate));
+                return user == null 
+                    ? new Response().AddError("Usuário ou senha inválidos") 
+                    : new Response(new UserResponse(user.Id, user.Email, user.Name, user.CreationDate));
+            }
+            catch (Exception ex)
+            {
+                return new Response().AddError(ex.Message);
+            }
         }
     }
 }

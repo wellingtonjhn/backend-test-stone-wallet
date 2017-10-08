@@ -67,6 +67,8 @@ namespace StoneWallet.Domain.Models.Entities
         /// <param name="limit">Valor do novo limite de crédito</param>
         public void ChangeWalletLimit(decimal limit)
         {
+            CheckIfExistsCreditCard("Deve existir pelo menos um cartão de crédito cadastrado");
+
             if (limit > MaximumCreditLimit)
             {
                 throw new InvalidOperationException($"Limite superior ao permitido para esta Wallet. O limite máximo é de {MaximumCreditLimit:C}");
@@ -81,10 +83,7 @@ namespace StoneWallet.Domain.Models.Entities
         /// <param name="amount"></param>
         public void Buy(decimal amount)
         {
-            if (!CreditCards.Any())
-            {
-                throw new InvalidOperationException("Não existem cartões de crédito disponíveis para realizar essa compra");
-            }
+            CheckIfExistsCreditCard("Não existem cartões de crédito disponíveis para realizar essa compra");
 
             if (AvailableCredit < amount)
             {
@@ -155,6 +154,14 @@ namespace StoneWallet.Domain.Models.Entities
             return CreditCards
                 .GroupBy(x => x.DueDate.Date)
                 .Any(g => g.Count() > 1);
+        }
+
+        private void CheckIfExistsCreditCard(string message)
+        {
+            if (!CreditCards.Any())
+            {
+                throw new InvalidOperationException(message);
+            }
         }
     }
 }

@@ -46,5 +46,19 @@ namespace StoneWallet.Repository
             }
             return wallet;
         }
+
+        public async Task ChangeWalletLimit(Wallet wallet)
+        {
+            using (var connection = GetConnection())
+            {
+                const string sql = @"UPDATE WALLETS SET WALLETLIMIT = @WalletLimit WHERE ID = @ID";
+
+                await connection.ExecuteAsync(sql, new
+                {
+                    wallet.Id,
+                    wallet.WalletLimit
+                });
+            }
+        }
     }
 }

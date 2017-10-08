@@ -33,10 +33,7 @@ namespace StoneWallet.Api.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            var userId = HttpContext.User.Identity.Name;
-
-            var query = new QueryUserInformation(new Guid(userId));
-            var response = await _mediator.Send(query);
+            var response = await _mediator.Send(new QueryUserInformation());
 
             if (response == null)
             {

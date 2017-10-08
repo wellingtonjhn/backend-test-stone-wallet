@@ -1,7 +1,8 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using StoneWallet.Application.Commands;
 using StoneWallet.Application.Queries;
-using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace StoneWallet.Api.Controllers
@@ -19,15 +20,25 @@ namespace StoneWallet.Api.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            var userId = HttpContext.User.Identity.Name;
-
-            var query = new QueryWalletInformation(new Guid(userId));
-            var response = await _mediator.Send(query);
+            var response = await _mediator.Send(new QueryWalletInformation());
 
             if (response == null)
             {
                 return NoContent();
             }
+            return Ok(response.Result);
+        }
+
+        [HttpPut, Route("limit")]
+        public async Task<IActionResult> ChangeWalletLimit([FromBody] ChangeWalletLimitCommand command)
+        {
+            var response = await _mediator.Send(command);
+
+            if (response.Errors.Any())
+            {
+                return BadRequest(response.Errors);
+            }
+
             return Ok(response.Result);
         }
     }
