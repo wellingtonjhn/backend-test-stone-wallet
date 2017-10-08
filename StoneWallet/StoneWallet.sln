@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StoneWallet.Api", "StoneWal
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StoneWallet.Application", "StoneWallet.Application\StoneWallet.Application.csproj", "{F5BB4275-7A17-4734-886C-36632E38937E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StoneWallet.Repository", "StoneWallet.Repository\StoneWallet.Repository.csproj", "{56E5BE23-58C8-49A6-A210-D23AC17A1169}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StoneWallet.Repository", "StoneWallet.Repository\StoneWallet.Repository.csproj", "{56E5BE23-58C8-49A6-A210-D23AC17A1169}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8AB162BC-4E03-4AE3-A8FC-24F206B8C5AF}"
 	ProjectSection(SolutionItems) = preProject
@@ -19,6 +19,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		..\bitbucket-pipelines.yml = ..\bitbucket-pipelines.yml
 		..\README-Enunciado.md = ..\README-Enunciado.md
 		..\README.md = ..\README.md
+		..\Stone Wallet.postman_collection.json = ..\Stone Wallet.postman_collection.json
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{C77566C4-52C3-4D43-B960-53F47710E4E2}"
