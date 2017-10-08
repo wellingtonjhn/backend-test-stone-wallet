@@ -9,7 +9,7 @@ namespace StoneWallet.Application.Commands.Validators
         {
             RuleFor(a => a.Limit)
                 .GreaterThan(0)
-                .WithMessage("O novo limite da Wallet deve ser maior que zero");
+                .WithMessage($"O limite real da Wallet deve ser maior que {0:C}");
         }
     }
 }

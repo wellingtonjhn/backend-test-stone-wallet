@@ -18,6 +18,7 @@ namespace StoneWallet.Domain.Models.Entities
         public int Cvv { get; }
         public decimal CreditLimit { get; }
         public decimal AvailableCredit { get; private set; }
+        public decimal PendingPayment => CreditLimit - AvailableCredit;
 
         protected CreditCard() { }
 

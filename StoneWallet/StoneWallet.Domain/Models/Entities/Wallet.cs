@@ -16,8 +16,9 @@ namespace StoneWallet.Domain.Models.Entities
 
         public decimal WalletLimit { get; private set; }
         public IReadOnlyCollection<CreditCard> CreditCards { get; }
-        public decimal MaximumCreditLimit { get { return CreditCards.Sum(a => a.CreditLimit); } }
-        public decimal AvailableCredit { get { return CreditCards.Sum(a => a.AvailableCredit); } }
+        public decimal MaximumCreditCardsLimit { get { return CreditCards.Sum(a => a.CreditLimit); } }
+        public decimal AvailableCreditCardsLimit { get { return CreditCards.Sum(a => a.AvailableCredit); } }
+        public decimal TotalPendingPayment { get { return CreditCards.Sum(a => a.PendingPayment); } }
 
         private IList<CreditCard> _creditCards { get; } = new List<CreditCard>();
 
@@ -72,9 +73,9 @@ namespace StoneWallet.Domain.Models.Entities
         {
             CheckIfExistsCreditCard("Deve existir pelo menos um cartão de crédito cadastrado");
 
-            if (limit > MaximumCreditLimit)
+            if (limit > MaximumCreditCardsLimit)
             {
-                throw new InvalidOperationException($"Limite superior ao permitido para esta Wallet. O limite máximo é de {MaximumCreditLimit:C}");
+                throw new InvalidOperationException($"Limite superior ao permitido para esta Wallet. O limite máximo é de {MaximumCreditCardsLimit:C}");
             }
 
             WalletLimit = limit;
@@ -87,11 +88,7 @@ namespace StoneWallet.Domain.Models.Entities
         public void Buy(decimal amount)
         {
             CheckIfExistsCreditCard("Não existem cartões de crédito disponíveis para realizar essa compra");
-
-            if (AvailableCredit < amount)
-            {
-                throw new InvalidOperationException("Sem crédito disponível para realizar essa compra");
-            }
+            CheckIfExistsCreditLimitAvailabe(amount);
 
             var selectedCard = SelectBetterCard();
 
@@ -164,6 +161,24 @@ namespace StoneWallet.Domain.Models.Entities
             if (!CreditCards.Any())
             {
                 throw new InvalidOperationException(message);
+            }
+        }
+
+        private void CheckIfExistsCreditLimitAvailabe(decimal amount)
+        {
+            var changeWalletLimitMessage = $"Altere o limite da Wallet para até {MaximumCreditCardsLimit:C} e tente novamente";
+
+            if (WalletLimit < amount)
+            {
+                throw new InvalidOperationException($"O limite máximo para compra é de {WalletLimit:C}. {changeWalletLimitMessage}");
+            }
+            if (TotalPendingPayment >= WalletLimit)
+            {
+                throw new InvalidOperationException($"O valor limite da Wallet ({WalletLimit:C}) foi atingido. {changeWalletLimitMessage}");
+            }
+            if (AvailableCreditCardsLimit < amount)
+            {
+                throw new InvalidOperationException($"Sem crédito disponível nos cartões para realizar essa compra. O limite disponível é de {AvailableCreditCardsLimit:C}");
             }
         }
     }

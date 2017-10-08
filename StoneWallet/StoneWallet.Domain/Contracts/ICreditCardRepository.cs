@@ -11,5 +11,6 @@ namespace StoneWallet.Domain.Contracts
         Task<IEnumerable<CreditCard>> GetByWalletId(Guid id);
         Task CreateCreditCard(CreditCard card);
         Task RemoveCreditCard(CreditCard card);
+        Task ChangeCardLimits(CreditCard creditCard);
     }
 }

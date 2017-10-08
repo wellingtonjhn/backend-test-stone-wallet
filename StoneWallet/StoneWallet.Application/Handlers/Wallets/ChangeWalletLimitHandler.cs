@@ -27,7 +27,7 @@ namespace StoneWallet.Application.Handlers.Wallets
 
                 await _repository.ChangeWalletLimit(wallet);
 
-                return new Response().AddError($"Limite da Wallet alterado para {wallet.WalletLimit:C}");
+                return new Response($"Limite da Wallet alterado para {wallet.WalletLimit:C}");
             }
             catch (Exception ex)
             {

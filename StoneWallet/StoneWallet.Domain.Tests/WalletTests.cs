@@ -139,7 +139,7 @@ namespace StoneWallet.Domain.Tests
             wallet.ChangeWalletLimit(newLimit);
 
             // Assert
-            Assert.Equal(newLimit, wallet.AvailableCredit);
+            Assert.Equal(newLimit, wallet.AvailableCreditCardsLimit);
         }
 
         [Fact]
@@ -162,6 +162,7 @@ namespace StoneWallet.Domain.Tests
 
             wallet.AddCreditCard(higherDueDateCreditCard);
             wallet.AddCreditCard(anotherCreditCard);
+            wallet.ChangeWalletLimit(wallet.CreditCards.Sum(a => a.CreditLimit));
 
             // Act
             wallet.Buy(300);
@@ -169,7 +170,7 @@ namespace StoneWallet.Domain.Tests
             // Assert
             var selectedCreditCard = wallet.CreditCards.First(a => a.Number == higherDueDateCreditCard.Number);
             Assert.Equal(200, selectedCreditCard.AvailableCredit);
-            Assert.Equal(1200, wallet.AvailableCredit);
+            Assert.Equal(1200, wallet.AvailableCreditCardsLimit);
         }
 
         [Fact]
@@ -182,13 +183,14 @@ namespace StoneWallet.Domain.Tests
 
             wallet.AddCreditCard(firstCreditCard);
             wallet.AddCreditCard(minimumLimitCreditCard);
+            wallet.ChangeWalletLimit(wallet.CreditCards.Sum(a => a.CreditLimit));
 
             // Act
             wallet.Buy(175);
 
             // Assert
             Assert.Equal(175, wallet.CreditCards.First(a => a.Number == minimumLimitCreditCard.Number).AvailableCredit);
-            Assert.Equal(675, wallet.AvailableCredit);
+            Assert.Equal(675, wallet.AvailableCreditCardsLimit);
         }
 
         [Fact]
@@ -203,6 +205,7 @@ namespace StoneWallet.Domain.Tests
             wallet.AddCreditCard(firstCreditCard);
             wallet.AddCreditCard(secondCreditCard);
             wallet.AddCreditCard(thirdCreditCard);
+            wallet.ChangeWalletLimit(wallet.CreditCards.Sum(a=> a.CreditLimit));
 
             // Act
             wallet.Buy(1300);
@@ -212,7 +215,7 @@ namespace StoneWallet.Domain.Tests
             Assert.Equal(0, wallet.CreditCards.First(card => card.Number == thirdCreditCard.Number).AvailableCredit);
 
             Assert.Equal(450, wallet.CreditCards.First(card => card.Number == secondCreditCard.Number).AvailableCredit);
-            Assert.Equal(450, wallet.AvailableCredit);
+            Assert.Equal(450, wallet.AvailableCreditCardsLimit);
         }
 
         [Fact]
@@ -225,6 +228,7 @@ namespace StoneWallet.Domain.Tests
 
             wallet.AddCreditCard(firstCreditCard);
             wallet.AddCreditCard(secondCreditCard);
+            wallet.ChangeWalletLimit(wallet.CreditCards.Sum(a => a.CreditLimit));
 
             // Act
             wallet.Buy(1450);
@@ -232,7 +236,7 @@ namespace StoneWallet.Domain.Tests
             // Assert
             Assert.Equal(0, wallet.CreditCards.First(card => card.Number == firstCreditCard.Number).AvailableCredit);
             Assert.Equal(50, wallet.CreditCards.First(card => card.Number == secondCreditCard.Number).AvailableCredit);
-            Assert.Equal(50, wallet.AvailableCredit);
+            Assert.Equal(50, wallet.AvailableCreditCardsLimit);
         }
 
         [Fact]

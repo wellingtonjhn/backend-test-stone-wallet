@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using Dapper;
+﻿using Dapper;
 using Microsoft.Extensions.Configuration;
 using StoneWallet.Domain.Contracts;
 using StoneWallet.Domain.Models.Entities;
+using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace StoneWallet.Repository
@@ -76,6 +76,23 @@ namespace StoneWallet.Repository
                 await connection.ExecuteAsync(sql, new
                 {
                     card.Id
+                });
+            }
+        }
+
+        public async Task ChangeCardLimits(CreditCard creditCard)
+        {
+            using (var connection = GetConnection())
+            {
+                const string sql = @"UPDATE CREDITCARDS 
+                                     SET CREDITLIMIT = @CREDITLIMIT, AVAILABLECREDIT = @AVAILABLECREDIT 
+                                     WHERE ID = @ID";
+
+                await connection.ExecuteAsync(sql, new
+                {
+                    creditCard.Id, 
+                    creditCard.CreditLimit,
+                    creditCard.AvailableCredit
                 });
             }
         }

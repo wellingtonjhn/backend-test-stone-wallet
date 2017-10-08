@@ -74,5 +74,21 @@ namespace StoneWallet.Api.Controllers
             }
             return Ok(response);
         }
+
+        [HttpPost, Route("purchase")]
+        public async Task<IActionResult> Purchase([FromBody] PurchaseCommand command)
+        {
+            if (command == null)
+            {
+                return BadRequest();
+            }
+
+            var response = await _mediator.Send(command);
+            if (response.Errors.Any())
+            {
+                return BadRequest(response);
+            }
+            return Ok(response);
+        }
     }
 }
