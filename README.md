@@ -29,6 +29,8 @@ dotnet run --project .\StoneWallet.Api\StoneWallet.Api.csproj
 
 ## Endpoints da API
 
+Os exemplos abaixo utilizam a ferramenta de linha de comando [CURL](https://curl.haxx.se/), mas você também pode utilizar o [Postman](https://www.getpostman.com/) para realizar as chamadas na api. Neste caso, basta importar para o Postman o arquivo [Stone Wallet.postman_collection.json](https://bitbucket.org/wellingtonjhn/stone-wallet/src) que está na raiz do repositório.
+
 #### Registrar um novo usuário
 ```
 curl -X POST http://localhost:51177/api/accounts/register \

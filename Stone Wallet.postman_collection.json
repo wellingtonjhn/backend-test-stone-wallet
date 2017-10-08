@@ -6,5 +6,242 @@
 		"description": "",
 		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
 	},
-	"item": []
+	"item": [
+		{
+			"name": "Usuário",
+			"description": "",
+			"item": [
+				{
+					"name": "Criar Usuário",
+					"request": {
+						"url": "{{server}}/api/accounts/register",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\" : \"Wellington Nascimento\",\n\t\"email\" : \"wellington@email.com\",\n\t\"password\" : \"pass\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Autenticar Usuário",
+					"request": {
+						"url": "{{server}}/api/accounts/login",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\" : \"wellington@email.com\",\n\t\"password\" : \"pass\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Consultar Informações do Usuário",
+					"request": {
+						"url": "{{server}}/api/accounts/profile",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6WyI5MDQyOTNiNy1jODAxLTQzZGMtYWEzYS0xMzZiNjE0YjlmMjkiLCJrcmliZWlyb2FkdkBnbWFpbC5jb20iXSwianRpIjoiNzg3ZmMxYTMtN2JkOS00MTM4LTk4MzctNjhjOGQ0MDkxZjc4Iiwic3ViIjoiS2F0aWEgUmliZWlybyIsImlhdCI6MTUwNzQ1NTM4MywibmJmIjoxNTA3NDU1MzgzLCJleHAiOjE1MDc0NTc3ODMsImlzcyI6IlN0b25lV2FsbGV0IiwiYXVkIjoiaHR0cDovL2xvY2FsaG9zdDo1OTQxNi8ifQ.F9llKLlwXm2XM21zm2yVmCNxUjO4jDSoNP8LTTtI9ss",
+								"description": ""
+							}
+						],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Alteração de senha do usuário",
+					"request": {
+						"url": "{{server}}/api/accounts/profile/password",
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6WyI5MDQyOTNiNy1jODAxLTQzZGMtYWEzYS0xMzZiNjE0YjlmMjkiLCJrcmliZWlyb2FkdkBnbWFpbC5jb20iXSwianRpIjoiNzg3ZmMxYTMtN2JkOS00MTM4LTk4MzctNjhjOGQ0MDkxZjc4Iiwic3ViIjoiS2F0aWEgUmliZWlybyIsImlhdCI6MTUwNzQ1NTM4MywibmJmIjoxNTA3NDU1MzgzLCJleHAiOjE1MDc0NTc3ODMsImlzcyI6IlN0b25lV2FsbGV0IiwiYXVkIjoiaHR0cDovL2xvY2FsaG9zdDo1OTQxNi8ifQ.F9llKLlwXm2XM21zm2yVmCNxUjO4jDSoNP8LTTtI9ss",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"newPassword\" : \"pass\",\n\t\"newPasswordConfirmation\" : \"pass\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Wallet",
+			"description": "",
+			"item": [
+				{
+					"name": "Consultar Informações da Wallet",
+					"request": {
+						"url": "{{server}}/api/wallets",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6WyI5MDQyOTNiNy1jODAxLTQzZGMtYWEzYS0xMzZiNjE0YjlmMjkiLCJrcmliZWlyb2FkdkBnbWFpbC5jb20iXSwianRpIjoiNzg3ZmMxYTMtN2JkOS00MTM4LTk4MzctNjhjOGQ0MDkxZjc4Iiwic3ViIjoiS2F0aWEgUmliZWlybyIsImlhdCI6MTUwNzQ1NTM4MywibmJmIjoxNTA3NDU1MzgzLCJleHAiOjE1MDc0NTc3ODMsImlzcyI6IlN0b25lV2FsbGV0IiwiYXVkIjoiaHR0cDovL2xvY2FsaG9zdDo1OTQxNi8ifQ.F9llKLlwXm2XM21zm2yVmCNxUjO4jDSoNP8LTTtI9ss",
+								"description": ""
+							}
+						],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Adicionar cartão de crédito",
+					"request": {
+						"url": "{{server}}/api/wallets/creditcards",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6WyI5MDQyOTNiNy1jODAxLTQzZGMtYWEzYS0xMzZiNjE0YjlmMjkiLCJrcmliZWlyb2FkdkBnbWFpbC5jb20iXSwianRpIjoiNzg3ZmMxYTMtN2JkOS00MTM4LTk4MzctNjhjOGQ0MDkxZjc4Iiwic3ViIjoiS2F0aWEgUmliZWlybyIsImlhdCI6MTUwNzQ1NTM4MywibmJmIjoxNTA3NDU1MzgzLCJleHAiOjE1MDc0NTc3ODMsImlzcyI6IlN0b25lV2FsbGV0IiwiYXVkIjoiaHR0cDovL2xvY2FsaG9zdDo1OTQxNi8ifQ.F9llKLlwXm2XM21zm2yVmCNxUjO4jDSoNP8LTTtI9ss",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"number\" : 1234567890987654,\n\t\"dueDate\" : \"2017-10-15\",\n\t\"expirationDate\" : \"2022-03-12\",\n\t\"printedName\" : \"Wellington Nascimento\",\n\t\"cvv\" : 567,\n\t\"creditLimit\" : 800\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Alterar limite da wallet",
+					"request": {
+						"url": "{{server}}/api/wallets/limit",
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6WyI5MDQyOTNiNy1jODAxLTQzZGMtYWEzYS0xMzZiNjE0YjlmMjkiLCJrcmliZWlyb2FkdkBnbWFpbC5jb20iXSwianRpIjoiNzg3ZmMxYTMtN2JkOS00MTM4LTk4MzctNjhjOGQ0MDkxZjc4Iiwic3ViIjoiS2F0aWEgUmliZWlybyIsImlhdCI6MTUwNzQ1NTM4MywibmJmIjoxNTA3NDU1MzgzLCJleHAiOjE1MDc0NTc3ODMsImlzcyI6IlN0b25lV2FsbGV0IiwiYXVkIjoiaHR0cDovL2xvY2FsaG9zdDo1OTQxNi8ifQ.F9llKLlwXm2XM21zm2yVmCNxUjO4jDSoNP8LTTtI9ss",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"limit\" : 800\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Remover cartão de crédito",
+					"request": {
+						"url": "{{server}}/api/wallets/creditcards",
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6WyI5MDQyOTNiNy1jODAxLTQzZGMtYWEzYS0xMzZiNjE0YjlmMjkiLCJrcmliZWlyb2FkdkBnbWFpbC5jb20iXSwianRpIjoiNzg3ZmMxYTMtN2JkOS00MTM4LTk4MzctNjhjOGQ0MDkxZjc4Iiwic3ViIjoiS2F0aWEgUmliZWlybyIsImlhdCI6MTUwNzQ1NTM4MywibmJmIjoxNTA3NDU1MzgzLCJleHAiOjE1MDc0NTc3ODMsImlzcyI6IlN0b25lV2FsbGV0IiwiYXVkIjoiaHR0cDovL2xvY2FsaG9zdDo1OTQxNi8ifQ.F9llKLlwXm2XM21zm2yVmCNxUjO4jDSoNP8LTTtI9ss",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"creditCardId\" : \"77898ef0-152c-473d-aed2-0269ec910363\" \n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Comprar",
+					"request": {
+						"url": "{{server}}/api/wallets/purchase",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6WyI5MDQyOTNiNy1jODAxLTQzZGMtYWEzYS0xMzZiNjE0YjlmMjkiLCJrcmliZWlyb2FkdkBnbWFpbC5jb20iXSwianRpIjoiNzg3ZmMxYTMtN2JkOS00MTM4LTk4MzctNjhjOGQ0MDkxZjc4Iiwic3ViIjoiS2F0aWEgUmliZWlybyIsImlhdCI6MTUwNzQ1NTM4MywibmJmIjoxNTA3NDU1MzgzLCJleHAiOjE1MDc0NTc3ODMsImlzcyI6IlN0b25lV2FsbGV0IiwiYXVkIjoiaHR0cDovL2xvY2FsaG9zdDo1OTQxNi8ifQ.F9llKLlwXm2XM21zm2yVmCNxUjO4jDSoNP8LTTtI9ss",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"amount\": 800\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Pagar cartão de crédito",
+					"request": {
+						"url": "{{server}}/api/wallets/creditcards/payment",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6WyI5MDQyOTNiNy1jODAxLTQzZGMtYWEzYS0xMzZiNjE0YjlmMjkiLCJrcmliZWlyb2FkdkBnbWFpbC5jb20iXSwianRpIjoiNzg3ZmMxYTMtN2JkOS00MTM4LTk4MzctNjhjOGQ0MDkxZjc4Iiwic3ViIjoiS2F0aWEgUmliZWlybyIsImlhdCI6MTUwNzQ1NTM4MywibmJmIjoxNTA3NDU1MzgzLCJleHAiOjE1MDc0NTc3ODMsImlzcyI6IlN0b25lV2FsbGV0IiwiYXVkIjoiaHR0cDovL2xvY2FsaG9zdDo1OTQxNi8ifQ.F9llKLlwXm2XM21zm2yVmCNxUjO4jDSoNP8LTTtI9ss",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"cardId\" : \"379d2521-bffa-4941-8669-4f18f0e63777\",\n\t\"amount\" : 500\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		}
+	]
 }
