@@ -28,7 +28,7 @@ namespace StoneWallet.Domain.Tests
         public void Should_AddCreditCard_When_NotExists()
         {
             // Arrange
-            var creditCard = GetValidCreditCard();
+            var creditCard = new CreditCard(Guid.NewGuid(), "Wellington", 123456789, 123, 1000, DateTime.Now.AddDays(30), DateTime.Now.AddYears(1));
             var wallet = new Wallet(UserId);
 
             // Act
@@ -42,8 +42,8 @@ namespace StoneWallet.Domain.Tests
         public void Should_AddMoreThanOneCreditCard()
         {
             // Arrange
-            var creditCardOne = new CreditCard("Wellington", 123456789, 123, 1000, DateTime.Now.AddDays(30), DateTime.Now.AddYears(1));
-            var creditCardTwo = new CreditCard("Katia", 987654321, 124563, 500, DateTime.Now.AddDays(30), DateTime.Now.AddYears(1));
+            var creditCardOne = new CreditCard(Guid.NewGuid(), "Wellington", 123456789, 123, 1000, DateTime.Now.AddDays(30), DateTime.Now.AddYears(1));
+            var creditCardTwo = new CreditCard(Guid.NewGuid(), "Katia", 987654321, 124563, 500, DateTime.Now.AddDays(30), DateTime.Now.AddYears(1));
 
             var wallet = new Wallet(UserId);
 
@@ -59,12 +59,12 @@ namespace StoneWallet.Domain.Tests
         public void Cannot_AddCreditCard_When_ExistsCreditCardWithSameNumber()
         {
             // Arrange
-            var creditCard = GetValidCreditCard();
+            var creditCard = new CreditCard(Guid.NewGuid(), "Wellington", 123456789, 123, 1000, DateTime.Now.AddDays(30), DateTime.Now.AddYears(1));
             var wallet = new Wallet(UserId);
             wallet.AddCreditCard(creditCard);
 
             // Act and Assert
-            var anotherCreditCard = GetValidCreditCard();
+            var anotherCreditCard = new CreditCard(Guid.NewGuid(), "Katia", 123456789, 123, 1000, DateTime.Now.AddDays(30), DateTime.Now.AddYears(1));
             Assert.Throws<InvalidOperationException>(() => wallet.AddCreditCard(anotherCreditCard));
         }
 
@@ -72,7 +72,7 @@ namespace StoneWallet.Domain.Tests
         public void Should_RemoveCreditCard_When_ExistsInWallet()
         {
             // Arrange
-            var creditCard = GetValidCreditCard();
+            var creditCard = new CreditCard(Guid.NewGuid(), "Wellington", 123456789, 123, 1000, DateTime.Now.AddDays(30), DateTime.Now.AddYears(1));
             var wallet = new Wallet(UserId);
             wallet.AddCreditCard(creditCard);
 
@@ -87,7 +87,7 @@ namespace StoneWallet.Domain.Tests
         public void Cannot_RemoveCreditCard_When_NotExistsInWallet()
         {
             // Arrange
-            var creditCard = GetValidCreditCard();
+            var creditCard = new CreditCard(Guid.NewGuid(), "Wellington", 123456789, 123, 1000, DateTime.Now.AddDays(30), DateTime.Now.AddYears(1));
             var wallet = new Wallet(UserId);
 
             // Act and Assert
@@ -98,7 +98,7 @@ namespace StoneWallet.Domain.Tests
         public void Should_ChangeWalletLimit_When_NotExceedsMaxLimit()
         {
             // Arrange
-            var creditCard = GetValidCreditCard();
+            var creditCard = new CreditCard(Guid.NewGuid(), "Wellington", 123456789, 123, 1000, DateTime.Now.AddDays(30), DateTime.Now.AddYears(1));
             var newLimit = 1000;
 
             var wallet = new Wallet(UserId);
@@ -115,7 +115,7 @@ namespace StoneWallet.Domain.Tests
         public void Cannot_ChangetWalletLimit_When_ExceedsMaxLimit()
         {
             // Arrange
-            var creditCard = GetValidCreditCard();
+            var creditCard = new CreditCard(Guid.NewGuid(), "Wellington", 123456789, 123, 1000, DateTime.Now.AddDays(30), DateTime.Now.AddYears(1));
             var newLimit = 2000;
 
             var wallet = new Wallet(UserId);
@@ -129,7 +129,7 @@ namespace StoneWallet.Domain.Tests
         public void Should_WalletAvailableLimit_EqualsTo_AvailableSumCreditCardLimit()
         {
             // Arrange
-            var creditCard = GetValidCreditCard();
+            var creditCard = new CreditCard(Guid.NewGuid(), "Wellington", 123456789, 123, 1000, DateTime.Now.AddDays(30), DateTime.Now.AddYears(1));
             var newLimit = 1000;
 
             var wallet = new Wallet(UserId);
@@ -157,8 +157,8 @@ namespace StoneWallet.Domain.Tests
         {
             // Arrange
             var wallet = new Wallet(UserId);
-            var higherDueDateCreditCard = new CreditCard("Katia", 987654321, 789, 500, DateTime.Now.AddDays(60), DateTime.Now.AddYears(1));
-            var anotherCreditCard = new CreditCard("Wellington", 123456789, 123, 1000, DateTime.Now.AddDays(30), DateTime.Now.AddYears(1));
+            var higherDueDateCreditCard = new CreditCard(Guid.NewGuid(), "Katia", 987654321, 789, 500, DateTime.Now.AddDays(60), DateTime.Now.AddYears(1));
+            var anotherCreditCard = new CreditCard(Guid.NewGuid(), "Wellington", 123456789, 123, 1000, DateTime.Now.AddDays(30), DateTime.Now.AddYears(1));
 
             wallet.AddCreditCard(higherDueDateCreditCard);
             wallet.AddCreditCard(anotherCreditCard);
@@ -177,8 +177,8 @@ namespace StoneWallet.Domain.Tests
         {
             // Arrange
             var wallet = new Wallet(UserId);
-            var firstCreditCard = new CreditCard("Katia", 543216789, 432, 500, DateTime.Now.AddDays(30), DateTime.Now.AddYears(1));
-            var minimumLimitCreditCard = new CreditCard("Wellington", 987654321, 789, 350, DateTime.Now.AddDays(30), DateTime.Now.AddYears(1));
+            var firstCreditCard = new CreditCard(Guid.NewGuid(), "Katia", 543216789, 432, 500, DateTime.Now.AddDays(30), DateTime.Now.AddYears(1));
+            var minimumLimitCreditCard = new CreditCard(Guid.NewGuid(), "Wellington", 987654321, 789, 350, DateTime.Now.AddDays(30), DateTime.Now.AddYears(1));
 
             wallet.AddCreditCard(firstCreditCard);
             wallet.AddCreditCard(minimumLimitCreditCard);
@@ -196,9 +196,9 @@ namespace StoneWallet.Domain.Tests
         {
             // Arrange
             var wallet = new Wallet(UserId);
-            var firstCreditCard = new CreditCard("Wellington", 987654321, 789, 500, DateTime.Now.AddDays(60), DateTime.Now.AddYears(1));
-            var secondCreditCard = new CreditCard("Katia", 123456789, 123, 1000, DateTime.Now.AddDays(30), DateTime.Now.AddYears(1));
-            var thirdCreditCard = new CreditCard("Leonardo", 123459876, 143, 250, DateTime.Now.AddDays(45), DateTime.Now.AddYears(1));
+            var firstCreditCard = new CreditCard(Guid.NewGuid(), "Wellington", 987654321, 789, 500, DateTime.Now.AddDays(60), DateTime.Now.AddYears(1));
+            var secondCreditCard = new CreditCard(Guid.NewGuid(), "Katia", 123456789, 123, 1000, DateTime.Now.AddDays(30), DateTime.Now.AddYears(1));
+            var thirdCreditCard = new CreditCard(Guid.NewGuid(), "Leonardo", 123459876, 143, 250, DateTime.Now.AddDays(45), DateTime.Now.AddYears(1));
 
             wallet.AddCreditCard(firstCreditCard);
             wallet.AddCreditCard(secondCreditCard);
@@ -220,8 +220,8 @@ namespace StoneWallet.Domain.Tests
         {
             // Arrange
             var wallet = new Wallet(UserId);
-            var firstCreditCard = new CreditCard("Wellington", 987654321, 789, 500, DateTime.Now.AddDays(60), DateTime.Now.AddYears(1));
-            var secondCreditCard = new CreditCard("Katia", 123456789, 123, 1000, DateTime.Now.AddDays(60), DateTime.Now.AddYears(1));
+            var firstCreditCard = new CreditCard(Guid.NewGuid(), "Wellington", 987654321, 789, 500, DateTime.Now.AddDays(60), DateTime.Now.AddYears(1));
+            var secondCreditCard = new CreditCard(Guid.NewGuid(), "Katia", 123456789, 123, 1000, DateTime.Now.AddDays(60), DateTime.Now.AddYears(1));
 
             wallet.AddCreditCard(firstCreditCard);
             wallet.AddCreditCard(secondCreditCard);
@@ -240,17 +240,12 @@ namespace StoneWallet.Domain.Tests
         {
             // Arrange
             var wallet = new Wallet(UserId);
-            var creditCard = new CreditCard("Wellington", 987654321, 789, 500, DateTime.Now.AddDays(60), DateTime.Now.AddYears(1));
+            var creditCard = new CreditCard(Guid.NewGuid(), "Wellington", 987654321, 789, 500, DateTime.Now.AddDays(60), DateTime.Now.AddYears(1));
 
             wallet.AddCreditCard(creditCard);
 
             // Act and Assert
             Assert.Throws<InvalidOperationException>(() => wallet.Buy(673));
-        }
-
-        private static CreditCard GetValidCreditCard()
-        {
-            return new CreditCard("Wellington", 123456789, 123, 1000, DateTime.Now.AddDays(30), DateTime.Now.AddYears(1));
         }
     }
 }

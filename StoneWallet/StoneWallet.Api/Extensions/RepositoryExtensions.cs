@@ -10,6 +10,7 @@ namespace StoneWallet.Api.Extensions
         {
             services.AddScoped<IUsersRepository, UsersesRepository>();
             services.AddScoped<IWalletRepository, WalletRepository>();
+            services.AddScoped<ICreditCardRepository, CreditCardRepository>();
         }
     }
 }

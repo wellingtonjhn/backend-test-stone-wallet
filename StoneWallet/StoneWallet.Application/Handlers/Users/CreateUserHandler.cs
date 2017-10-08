@@ -36,7 +36,7 @@ namespace StoneWallet.Application.Handlers.Users
                 await _repository.CreateUser(user);
                 await _mediator.Publish(new CreateWalletCommand(user));
 
-                return new Response(new UserResponse(user.Id, user.Email, user.Name, user.CreationDate));
+                return new Response(user);
             }
             catch (Exception ex)
             {

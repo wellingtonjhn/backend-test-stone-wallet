@@ -59,7 +59,7 @@ namespace StoneWallet.Domain.Tests
 
         private static CreditCard CreateCreditCard(int creditCardLimit)
         {
-            return new CreditCard("Wellington", 123456789, 123, creditCardLimit, DateTime.Now.AddDays(30), DateTime.Now.AddYears(1));
+            return new CreditCard(Guid.NewGuid(), "Wellington", 123456789, 123, creditCardLimit, DateTime.Now.AddDays(30), DateTime.Now.AddYears(1));
         }
     }
 }

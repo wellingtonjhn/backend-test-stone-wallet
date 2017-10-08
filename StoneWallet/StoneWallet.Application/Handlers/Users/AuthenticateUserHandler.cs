@@ -26,7 +26,7 @@ namespace StoneWallet.Application.Handlers.Users
 
                 return user == null 
                     ? new Response().AddError("Usuário ou senha inválidos") 
-                    : new Response(new UserResponse(user.Id, user.Email, user.Name, user.CreationDate));
+                    : new Response(user);
             }
             catch (Exception ex)
             {

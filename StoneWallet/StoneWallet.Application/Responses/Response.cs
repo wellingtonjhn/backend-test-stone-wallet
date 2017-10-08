@@ -3,16 +3,16 @@ using System.Collections.ObjectModel;
 
 namespace StoneWallet.Application.Responses
 {
-    public class Response
+    public class Response 
     {
-        private readonly IList<string> _errors = new List<string>();
+        private readonly IList<string> _messages = new List<string>();
 
         public IEnumerable<string> Errors { get; }
         public object Result { get; }
 
         public Response()
         {
-            Errors = new ReadOnlyCollection<string>(_errors);
+            Errors = new ReadOnlyCollection<string>(_messages);
         }
 
         public Response(object result)
@@ -21,9 +21,9 @@ namespace StoneWallet.Application.Responses
             Result = result;
         }
 
-        public Response AddError(string error)
+        public Response AddError(string message)
         {
-            _errors.Add(error);
+            _messages.Add(message);
             return this;
         }
     }

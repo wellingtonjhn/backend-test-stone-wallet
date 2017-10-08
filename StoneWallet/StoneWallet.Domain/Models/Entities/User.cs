@@ -1,4 +1,5 @@
-﻿using StoneWallet.Domain.Models.ValueObjects;
+﻿using Newtonsoft.Json;
+using StoneWallet.Domain.Models.ValueObjects;
 using System;
 
 namespace StoneWallet.Domain.Models.Entities
@@ -10,6 +11,8 @@ namespace StoneWallet.Domain.Models.Entities
     {
         public string Name { get; }
         public string Email { get; }
+
+        [JsonIgnore]
         public Password Password { get; private set; }
 
         protected User() { }

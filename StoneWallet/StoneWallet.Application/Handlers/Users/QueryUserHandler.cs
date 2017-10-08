@@ -2,6 +2,7 @@
 using StoneWallet.Application.Commands.Users;
 using StoneWallet.Application.Responses;
 using StoneWallet.Domain.Contracts;
+using System;
 using System.Threading.Tasks;
 
 namespace StoneWallet.Application.Handlers.Users
@@ -19,14 +20,21 @@ namespace StoneWallet.Application.Handlers.Users
 
         public async Task<Response> Handle(QueryUserInformation message)
         {
-            var user = await _repository.Get(_authenticatedUser.UserId);
-
-            if (user == null)
+            try
             {
-                return new Response().AddError("Nenhum registro encontrado");
-            }
+                var user = await _repository.Get(_authenticatedUser.UserId);
 
-            return new Response(new UserResponse(user.Id, user.Email, user.Name, user.CreationDate));
+                if (user == null)
+                {
+                    return new Response().AddError("Nenhum registro encontrado");
+                }
+
+                return new Response(user);
+            }
+            catch (Exception ex)
+            {
+                return new Response().AddError(ex.Message);
+            }
         }
     }
 }

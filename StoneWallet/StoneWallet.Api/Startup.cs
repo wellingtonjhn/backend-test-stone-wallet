@@ -24,7 +24,7 @@ namespace StoneWallet.Api
             services.AddMediatR(Configuration);
             services.AddJwtOptions(Configuration);
             services.AddLogging();
-            services.AddMvcWithPolicy();
+            services.AddMvcWithCustomConfiguration();
             services.AddSingleton(Configuration);
         }
 

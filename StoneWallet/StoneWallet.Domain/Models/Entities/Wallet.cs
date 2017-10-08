@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -10,7 +11,9 @@ namespace StoneWallet.Domain.Models.Entities
     /// </summary>
     public class Wallet : Entity
     {
+        [JsonIgnore]
         public Guid UserId { get; }
+
         public decimal WalletLimit { get; private set; }
         public IReadOnlyCollection<CreditCard> CreditCards { get; }
         public decimal MaximumCreditLimit { get { return CreditCards.Sum(a => a.CreditLimit); } }

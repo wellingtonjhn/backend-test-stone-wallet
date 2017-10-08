@@ -37,13 +37,38 @@ namespace StoneWallet.Repository
 
             using (var connection = GetConnection())
             {
-                const string sql = @"SELECT ID, USERID, WALLETLIMIT, CREATIONDATE FROM WALLETS WHERE USERID = @USERID";
+                const string queryWallet = "SELECT ID, USERID, WALLETLIMIT, CREATIONDATE FROM WALLETS WHERE USERID = @USERID;";
 
-                wallet = await connection.QueryFirstOrDefaultAsync<Wallet>(sql, new
+                const string queryCreditCards = @"SELECT
+	                                                C.ID
+	                                                , C.WALLETID
+	                                                , C.NUMBER
+	                                                , C.DUEDATE
+	                                                , C.EXPIRATIONDATE
+	                                                , C.PRINTEDNAME
+	                                                , C.CVV
+	                                                , C.CREDITLIMIT
+	                                                , C.AVAILABLECREDIT
+	                                                , C.CREATIONDATE AS CARDCREATIONDATE
+                                                FROM WALLETS W
+                                                INNER JOIN CREDITCARDS C ON W.ID = C.WALLETID
+                                                WHERE W.USERID = @USERID;";
+
+                using (var multi = connection.QueryMultiple(queryWallet + queryCreditCards, new { userId }))
                 {
-                    userId
-                });
+                    wallet = await multi.ReadFirstOrDefaultAsync<Wallet>();
+
+                    if (wallet != null)
+                    {
+                        var creditCards = await multi.ReadAsync<CreditCard>();
+                        foreach (var card in creditCards)
+                        {
+                            wallet.AddCreditCard(card);
+                        }
+                    }
+                }
             }
+
             return wallet;
         }
 
