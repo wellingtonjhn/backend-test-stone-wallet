@@ -10,5 +10,6 @@ namespace StoneWallet.Domain.Contracts
         Task CreateUser(User user);
         Task<bool> ExistsUser(string email);
         Task<User> Authenticate(string email, string password);
+        Task ChangePassword(User user);
     }
 }

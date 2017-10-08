@@ -30,6 +30,10 @@ namespace StoneWallet.Api.Controllers
             _jwtSettings = jwtSettings.Value;
         }
 
+        /// <summary>
+        /// Obtém os dados do usuário logado
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> Get()
         {
@@ -46,7 +50,7 @@ namespace StoneWallet.Api.Controllers
         /// Cria um novo usuário
         /// </summary>
         /// <param name="command">Informações do usuário</param>
-        /// <returns></returns>
+        /// <returns>Informações básicas do usuário recém criado</returns>
         [HttpPost, AllowAnonymous]
         public async Task<IActionResult> CreateUser([FromBody]CreateUserCommand command)
         {
@@ -77,6 +81,23 @@ namespace StoneWallet.Api.Controllers
             var jwt = identity.CreateJwtToken(_jwtSettings, _signingSettings);
 
             return Ok(jwt);
+        }
+
+        /// <summary>
+        /// Alteara a senha do usuário logado
+        /// </summary>
+        /// <param name="command">Comando de alteração de senha</param>
+        /// <returns>Mensagem de sucesso ou de erro</returns>
+        [HttpPut, Route("password")]
+        public async Task<IActionResult> ChangePassword([FromBody] ChangeUserPasswordCommand command)
+        {
+            var response = await _mediator.Send(command);
+
+            if (response.Errors.Any())
+            {
+                return BadRequest(response.Errors);
+            }
+            return Ok(response.Result);
         }
 
         private ClaimsIdentity GetClaimsIdentity(UserResponse user)

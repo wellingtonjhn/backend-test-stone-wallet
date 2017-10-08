@@ -78,5 +78,19 @@ namespace StoneWallet.Repository
             }
             return user;
         }
+
+        public async Task ChangePassword(User user)
+        {
+            using (var connection = GetConnection())
+            {
+                const string sql = @"UPDATE USERS SET PASSWORD = @PASSWORD WHERE ID = @ID";
+
+                await connection.ExecuteAsync(sql, new
+                {
+                    user.Id,
+                    password = user.Password.Encoded
+                });
+            }
+        }
     }
 }
