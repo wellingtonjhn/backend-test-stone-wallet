@@ -8,7 +8,11 @@ using System.Threading.Tasks;
 
 namespace StoneWallet.Application.Core.Middlewares
 {
-
+    /// <summary>
+    /// Middleware responsável por validar os comandos antes de seus respectivos Handlers serem executados (fail-fast)
+    /// </summary>
+    /// <typeparam name="TRequest">Tipo do comando</typeparam>
+    /// <typeparam name="TResponse">Tipo do retorno do comando</typeparam>
     public class FluentValidationMiddleware<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
         where TRequest : IRequest<TResponse> where TResponse : Response
     {
@@ -19,6 +23,12 @@ namespace StoneWallet.Application.Core.Middlewares
             _validators = validators;
         }
 
+        /// <summary>
+        /// Executa o middleware
+        /// </summary>
+        /// <param name="request">Comando a ser validado</param>
+        /// <param name="next">Próximo middleware do pipeline do MediatR</param>
+        /// <returns>Retorna a resposta do comando ou os erros acusados pelo validador do comando</returns>
         public Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next)
         {
             var failures = _validators

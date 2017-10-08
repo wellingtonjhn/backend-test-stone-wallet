@@ -7,11 +7,18 @@ using System.Threading.Tasks;
 
 namespace StoneWallet.Api.Controllers
 {
+    /// <summary>
+    /// Representa um controlador dos endpoints da Wallet
+    /// </summary>
     [Route("api/[controller]")]
     public class WalletsController : Controller
     {
         private readonly IMediator _mediator;
 
+        /// <summary>
+        /// Construtor da controller da Wallet
+        /// </summary>
+        /// <param name="mediator">Instância do Mediator</param>
         public WalletsController(IMediator mediator)
         {
             _mediator = mediator;

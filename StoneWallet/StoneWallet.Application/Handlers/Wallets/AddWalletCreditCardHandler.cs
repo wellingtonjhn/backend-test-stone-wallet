@@ -8,12 +8,21 @@ using System.Threading.Tasks;
 
 namespace StoneWallet.Application.Handlers.Wallets
 {
+    /// <summary>
+    /// Responsável por tratar o comando de Inclusão de Cartão de Crédito
+    /// </summary>
     public class AddWalletCreditCardHandler : IAsyncRequestHandler<AddCreditCardCommand, Response>
     {
         private readonly IWalletRepository _walletRepository;
         private readonly ICreditCardRepository _creditCardRepository;
         private readonly IAuthenticatedUser _authenticatedUser;
 
+        /// <summary>
+        /// Cria um tratador para o comando de Inclusão de Cartão de Crédito
+        /// </summary>
+        /// <param name="walletRepository">Repositório da Wallet</param>
+        /// <param name="creditCardRepository">Repositório do Cartão de Crédito</param>
+        /// <param name="authenticatedUser">Usuário Autenticado</param>
         public AddWalletCreditCardHandler(IWalletRepository walletRepository,
             ICreditCardRepository creditCardRepository,
             IAuthenticatedUser authenticatedUser)
@@ -23,6 +32,11 @@ namespace StoneWallet.Application.Handlers.Wallets
             _authenticatedUser = authenticatedUser;
         }
 
+        /// <summary>
+        /// Executa o tratamento do comando
+        /// </summary>
+        /// <param name="message">Comando de Inclusão de Cartão de Crédito</param>
+        /// <returns>Resposta da execução do comando</returns>
         public async Task<Response> Handle(AddCreditCardCommand message)
         {
             try

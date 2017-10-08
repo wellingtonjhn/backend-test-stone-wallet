@@ -8,15 +8,27 @@ using System.Threading.Tasks;
 
 namespace StoneWallet.Application.Handlers.Users
 {
+    /// <summary>
+    /// Responsável por tratar o comando de Autenticação do Usuário
+    /// </summary>
     public class AuthenticateUserHandler : IAsyncRequestHandler<AuthenticateUserCommand, Response>
     {
         private readonly IUsersRepository _repository;
 
+        /// <summary>
+        /// Cria um tratador para o comando de Autenticação do Usuário
+        /// </summary>
+        /// <param name="repository">Repositório do Usuário</param>
         public AuthenticateUserHandler(IUsersRepository repository)
         {
             _repository = repository;
         }
 
+        /// <summary>
+        /// Executa o tratamento do comando
+        /// </summary>
+        /// <param name="message">Comando de autenticação do usuário</param>
+        /// <returns>Resposta da execução do comando</returns>
         public async Task<Response> Handle(AuthenticateUserCommand message)
         {
             try

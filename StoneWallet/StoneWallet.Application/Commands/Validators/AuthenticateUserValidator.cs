@@ -3,6 +3,9 @@ using StoneWallet.Application.Commands.Users;
 
 namespace StoneWallet.Application.Commands.Validators
 {
+    /// <summary>
+    /// Representa um validador de dados para o comando de Autenticação do Usuário
+    /// </summary>
     public class AuthenticateUserValidator : AbstractValidator<AuthenticateUserCommand>
     {
         public AuthenticateUserValidator()

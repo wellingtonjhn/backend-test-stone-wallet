@@ -9,8 +9,15 @@ using StoneWallet.Domain.Contracts;
 
 namespace StoneWallet.Api.Extensions
 {
+    /// <summary>
+    ///  Representa extensões para configurar o ASP.NET MVC
+    /// </summary>
     public static class MvcExtensions
     {
+        /// <summary>
+        /// Registra o ASP.NET MVC no injetor de dependências
+        /// </summary>
+        /// <param name="services">Instância do injetor de dependências</param>
         public static void AddMvcWithCustomConfiguration(this IServiceCollection services)
         {
             services.AddAuthorization(options =>

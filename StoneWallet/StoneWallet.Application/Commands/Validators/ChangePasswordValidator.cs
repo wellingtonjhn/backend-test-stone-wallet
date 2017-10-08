@@ -3,6 +3,9 @@ using StoneWallet.Application.Commands.Users;
 
 namespace StoneWallet.Application.Commands.Validators
 {
+    /// <summary>
+    /// Representa um validador de dados para o comando de Alteração de Senha do Usuário
+    /// </summary>
     public class ChangePasswordValidator : AbstractValidator<ChangeUserPasswordCommand>
     {
         public ChangePasswordValidator()

@@ -8,13 +8,23 @@ using System.Threading.Tasks;
 
 namespace StoneWallet.Repository
 {
+    /// <inheritdoc cref="Repository" />
+    /// <summary>
+    /// Repositório de Cartão de Crédito
+    /// </summary>
     public class CreditCardRepository : Repository, ICreditCardRepository
     {
+        /// <inheritdoc />
+        /// <summary>
+        /// Cria um repositório de Cartão de Crédito
+        /// </summary>
+        /// <param name="configuration">Configuração da aplicação</param>
         public CreditCardRepository(IConfiguration configuration)
             : base(configuration)
         {
         }
 
+        /// <inheritdoc />
         public async Task<CreditCard> Get(Guid id)
         {
             CreditCard card;
@@ -31,6 +41,7 @@ namespace StoneWallet.Repository
             return card;
         }
 
+        /// <inheritdoc />
         public async Task<IEnumerable<CreditCard>> GetByWalletId(Guid walletId)
         {
             IEnumerable<CreditCard> cards;
@@ -44,6 +55,7 @@ namespace StoneWallet.Repository
             return cards;
         }
 
+        /// <inheritdoc />
         public async Task CreateCreditCard(CreditCard card)
         {
             using (var connection = GetConnection())
@@ -67,6 +79,7 @@ namespace StoneWallet.Repository
             }
         }
 
+        /// <inheritdoc />
         public async Task RemoveCreditCard(CreditCard card)
         {
             using (var connection = GetConnection())
@@ -80,6 +93,7 @@ namespace StoneWallet.Repository
             }
         }
 
+        /// <inheritdoc />
         public async Task ChangeCardLimits(CreditCard creditCard)
         {
             using (var connection = GetConnection())

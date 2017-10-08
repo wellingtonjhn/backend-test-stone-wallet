@@ -7,13 +7,23 @@ using System.Threading.Tasks;
 
 namespace StoneWallet.Repository
 {
+    /// <inheritdoc cref="Repository" />
+    /// <summary>
+    /// Repositório de Wallet
+    /// </summary>
     public class WalletRepository : Repository, IWalletRepository
     {
+        /// <inheritdoc />
+        /// <summary>
+        /// Cria um repositório da Wallet
+        /// </summary>
+        /// <param name="configuration">Configuração da aplicação</param>
         public WalletRepository(IConfiguration configuration)
             : base(configuration)
         {
         }
 
+        /// <inheritdoc />
         public async Task CreateWallet(Wallet wallet)
         {
             using (var connection = GetConnection())
@@ -31,6 +41,7 @@ namespace StoneWallet.Repository
             }
         }
 
+        /// <inheritdoc />
         public async Task<Wallet> GetWalletByUser(Guid userId)
         {
             Wallet wallet;
@@ -72,6 +83,7 @@ namespace StoneWallet.Repository
             return wallet;
         }
 
+        /// <inheritdoc />
         public async Task ChangeWalletLimit(Wallet wallet)
         {
             using (var connection = GetConnection())

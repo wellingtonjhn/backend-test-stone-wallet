@@ -5,10 +5,17 @@ using System.Text;
 
 namespace StoneWallet.Domain.Models.ValueObjects
 {
+    /// <summary>
+    /// Representa uma senha
+    /// </summary>
     public sealed class Password
     {
         public string Encoded { get; }
 
+        /// <summary>
+        /// Cria uma senha criptografada
+        /// </summary>
+        /// <param name="password">Senha em plain-text à ser criptografada</param>
         public Password(string password)
         {
             Encoded = EncodePassword(password);

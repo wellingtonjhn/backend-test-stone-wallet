@@ -15,17 +15,25 @@ Essa api foi criada utilizando as seguintes tecnologias:
 * Visualização dos logs da aplicação no [PaperTrail](https://papertrailapp.com) 
 * Autenticação de usuário baseada em token JWT [Json Web Token](https://tools.ietf.org/html/rfc7519)
 * Banco de dados SQL com [Heroku Postgres](https://www.heroku.com/postgres)
+* Documentação da API gerada com o [Swagger](https://swagger.io/)
 
-## Como rodar esse projeto localmente
+## Como rodar esse projeto em seu computador
 
 Primeiramente será necessário instalar o [.Net Core 2.0 SDK](https://www.microsoft.com/net/download/core), em seguida use os seguintes comandos no terminal para clonar e executar o projeto:
 
 ```
-git clone https://wellingtonjhn@bitbucket.org/wellingtonjhn/stone-wallet.git
+git clone https://bitbucket.org/wellingtonjhn/stone-wallet
 cd stone-wallet\StoneWallet
 dotnet build
 dotnet run --project .\StoneWallet.Api\StoneWallet.Api.csproj
 ```
+
+> Você também pode abrir o arquivo de Solution diretamente no Visual Studio, marcar o projeto **StoneWallet.Api.csproj** como default e pressionar a tecla F5 para executar a aplicação.
+
+## Documentação
+
+Esse projeto conta com uma documentação dos endpoints da API feita através do [Swagger](https://swagger.io/).
+Após rodar a aplicação basta acessar a url "http://localhost:{port}/docs/", onde {port} deverá ser substituído pela porta em que a aplicação está rodando em seu computador.
 
 ## Endpoints da API
 

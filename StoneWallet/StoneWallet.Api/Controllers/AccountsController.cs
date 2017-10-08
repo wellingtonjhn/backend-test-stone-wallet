@@ -15,6 +15,9 @@ using System.Threading.Tasks;
 
 namespace StoneWallet.Api.Controllers
 {
+    /// <summary>
+    /// Representa um controlador dos endpoints de Usuário
+    /// </summary>
     [Route("api/[controller]")]
     public class AccountsController : Controller
     {
@@ -22,6 +25,12 @@ namespace StoneWallet.Api.Controllers
         private readonly SigningSettings _signingSettings;
         private readonly JwtSettings _jwtSettings;
 
+        /// <summary>
+        /// Construtor da controller de Usuário
+        /// </summary>
+        /// <param name="mediator">Instância do Mediator</param>
+        /// <param name="jwtSettings">Configurações do token JWT</param>
+        /// <param name="signingSettings">Credênciais para assinatura do token</param>
         public AccountsController(IMediator mediator, IOptions<JwtSettings> jwtSettings, SigningSettings signingSettings)
         {
             _mediator = mediator;
@@ -78,7 +87,7 @@ namespace StoneWallet.Api.Controllers
         /// <summary>
         /// Obtém os dados do usuário logado
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Dados do usuário logado</returns>
         [HttpGet, Route("profile")]
         public async Task<IActionResult> Get()
         {

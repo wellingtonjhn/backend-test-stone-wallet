@@ -7,13 +7,23 @@ using System.Threading.Tasks;
 
 namespace StoneWallet.Repository
 {
-    public class UsersesRepository : Repository, IUsersRepository
+    /// <inheritdoc cref="Repository" />
+    /// <summary>
+    /// Repositório de Usuário
+    /// </summary>
+    public class UsersRepository : Repository, IUsersRepository
     {
-        public UsersesRepository(IConfiguration configuration)
+       /// <inheritdoc />
+       /// <summary>
+       /// Cria um repositório de Usuário
+       /// </summary>
+       /// <param name="configuration">Configuração da aplicação</param>
+        public UsersRepository(IConfiguration configuration)
             : base(configuration)
         {
         }
 
+        /// <inheritdoc />
         public async Task<User> Get(Guid id)
         {
             User user;
@@ -30,6 +40,7 @@ namespace StoneWallet.Repository
             return user;
         }
 
+        /// <inheritdoc />
         public async Task CreateUser(User user)
         {
             using (var connection = GetConnection())
@@ -48,6 +59,7 @@ namespace StoneWallet.Repository
             }
         }
 
+        /// <inheritdoc />
         public async Task<bool> ExistsUser(string email)
         {
             bool exists;
@@ -61,6 +73,7 @@ namespace StoneWallet.Repository
             return exists;
         }
 
+        /// <inheritdoc />
         public async Task<User> Authenticate(string email, string password)
         {
             User user;
@@ -79,6 +92,7 @@ namespace StoneWallet.Repository
             return user;
         }
 
+        /// <inheritdoc />
         public async Task ChangePassword(User user)
         {
             using (var connection = GetConnection())

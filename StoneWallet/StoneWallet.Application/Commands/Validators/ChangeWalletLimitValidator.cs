@@ -3,6 +3,9 @@ using StoneWallet.Application.Commands.Wallets;
 
 namespace StoneWallet.Application.Commands.Validators
 {
+    /// <summary>
+    /// Representa um validador de dados para o comando de Alteração do Limite da Wallet
+    /// </summary>
     public class ChangeWalletLimitValidator : AbstractValidator<ChangeWalletLimitCommand>
     {
         public ChangeWalletLimitValidator()

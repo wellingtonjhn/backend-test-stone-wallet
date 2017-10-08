@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace StoneWallet.Api.Settings
 {
+    /// <summary>
+    /// Configuração para geração do token JWT
+    /// </summary>
     public class JwtSettings
     {
         public string Audience { get; set; }
@@ -20,6 +23,9 @@ namespace StoneWallet.Api.Settings
         public Func<Task<string>> JtiGenerator => () => Task.FromResult(Guid.NewGuid().ToString());
     }
 
+    /// <summary>
+    /// Credenciais para geração do token JWT
+    /// </summary>
     public class SigningSettings
     {
         public SigningCredentials SigningCredentials { get; }

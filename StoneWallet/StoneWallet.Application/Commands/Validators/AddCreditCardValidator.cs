@@ -3,6 +3,9 @@ using StoneWallet.Application.Commands.Wallets;
 
 namespace StoneWallet.Application.Commands.Validators
 {
+    /// <summary>
+    /// Representa um validador de dados para o comando de Criação de Cartão de Crédito
+    /// </summary>
     public class AddCreditCardValidator : AbstractValidator<AddCreditCardCommand>
     {
         public AddCreditCardValidator()
