@@ -19,7 +19,6 @@ Essa api foi criada utilizando as seguintes tecnologias:
 
 
 ## Pontos de melhoria
-* Corrigir bug ao iniciar a aplicação com **dot net run** via terminal, onde as configurações não são carregadas;
 * Remover lançamento de exceptions do dominio e substituir por [Domain Notifications](https://martinfowler.com/eaaDev/Notification.html).
 
 ## Como rodar esse projeto em seu computador
@@ -28,9 +27,13 @@ Primeiramente será necessário instalar o [.Net Core 2.0 SDK](https://www.micro
 
 ```
 git clone https://bitbucket.org/wellingtonjhn/stone-wallet
+cd stone-wallet\StoneWallet\StoneWallet.Api\
+dotnet build
+dotnet run
 ```
+Neste momento, serão exibidas as configurações de inicialização no terminal, bem como o endereço e porta em que a aplicação está rodando. Basta copiar a url e acessar seus endpoints conforme exemplos abaixo, respeitando sempre a porta em que a aplicação está rodando.
 
-> Abra a Solution no Visual Studio, marque o projeto **StoneWallet.Api.csproj** como default e pressione a tecla F5 para executar a aplicação.
+> Você também pode abrir o arquivo de Solution diretamente no Visual Studio, marcar o projet o **StoneWallet.Api.csproj** como default e pressionar a tecla F5 para executar a aplicação.
 
 ## Documentação
 
