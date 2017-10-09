@@ -62,7 +62,8 @@ curl -X POST http://localhost:51177/api/accounts/login \
 
 #### Consultar informações do usuário (requer usuário logado)
 ```
-curl -X GET http://localhost:51177/api/accounts/profile -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9 ...'
+curl -X GET http://localhost:51177/api/accounts/profile \
+  -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9 ...'
 ```
 
 #### Alterar a senha do usuário logado (requer usuário logado)
@@ -75,7 +76,8 @@ curl -X PUT http://localhost:51177/api/accounts/profile/password \
 
 #### Consultar informações da Wallet (requer usuário logado)
 ```
-curl -X GET http://localhost:51177/api/wallets -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9 ...' \
+curl -X GET http://localhost:51177/api/wallets \
+  -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9 ...'
 ```
 
 #### Adicionar Cartão de Crédito (requer usuário logado)
@@ -121,7 +123,7 @@ curl -X POST http://localhost:51177/api/wallets/purchase \
 ```
 curl -X POST \
   http://localhost:51177/api/wallets/creditcards/payment \
-  -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6WyI5MDQyOTNiNy1jODAxLTQzZGMtYWEzYS0xMzZiNjE0YjlmMjkiLCJrcmliZWlyb2FkdkBnbWFpbC5jb20iXSwianRpIjoiNzg3ZmMxYTMtN2JkOS00MTM4LTk4MzctNjhjOGQ0MDkxZjc4Iiwic3ViIjoiS2F0aWEgUmliZWlybyIsImlhdCI6MTUwNzQ1NTM4MywibmJmIjoxNTA3NDU1MzgzLCJleHAiOjE1MDc0NTc3ODMsImlzcyI6IlN0b25lV2FsbGV0IiwiYXVkIjoiaHR0cDovL2xvY2FsaG9zdDo1OTQxNi8ifQ.F9llKLlwXm2XM21zm2yVmCNxUjO4jDSoNP8LTTtI9ss' \
+  -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9 ...' \
   -H 'content-type: application/json' \
   -d '{	"cardId" : "379d2521-bffa-4941-8669-4f18f0e63777", "amount" : 500 }'
 ```
