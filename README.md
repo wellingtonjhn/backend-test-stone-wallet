@@ -1,8 +1,6 @@
 # Stone Wallet
 
-[![build-status](https://pipelines-badges-service.useast.staging.atlassian.io/badge/atlassian/confluence-web-components.svg)](https://bitbucket.org/wellingtonjhn/stone-wallet/addon/pipelines/home) 
-
-Possível solução para o Desafio do Cartão de Multi-Crédito para a vaga de backend developer na Stone Pagamentos
+Possível solução para o Desafio do Cartão de Multi-Crédito para a vaga de backend developer na Stone Pagamentos.
 
 ## Sobre o projeto
 
@@ -26,7 +24,7 @@ Essa api foi criada utilizando as seguintes tecnologias:
 Primeiramente será necessário instalar o [.Net Core 2.0 SDK](https://www.microsoft.com/net/download/core), em seguida use os seguintes comandos no terminal para clonar e executar o projeto:
 
 ```
-git clone https://bitbucket.org/wellingtonjhn/stone-wallet
+git clone https://github.com/wellingtonjhn/backend-test-stone-wallet
 cd stone-wallet\StoneWallet\StoneWallet.Api\
 dotnet build
 dotnet run
@@ -42,7 +40,7 @@ Após rodar a aplicação basta acessar a url "http://localhost:{port}/docs/", o
 
 ## Endpoints da API
 
-Os exemplos abaixo utilizam a ferramenta de linha de comando [CURL](https://curl.haxx.se/), mas você também pode utilizar o [Postman](https://www.getpostman.com/) para realizar as chamadas na api. Neste caso, basta importar para o Postman o arquivo [Stone Wallet.postman_collection.json](https://bitbucket.org/wellingtonjhn/stone-wallet/src) que está na raiz do repositório.
+Os exemplos abaixo utilizam a ferramenta de linha de comando [CURL](https://curl.haxx.se/), mas você também pode utilizar o [Postman](https://www.getpostman.com/) para realizar as chamadas na api. Neste caso, basta importar para o Postman o arquivo **Stone Wallet.postman_collection.json** que está na raiz do repositório.
 
 #### Registrar um novo usuário
 ```
